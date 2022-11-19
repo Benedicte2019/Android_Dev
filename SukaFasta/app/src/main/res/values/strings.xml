@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SukaFasta</string>
+    <string name="login_text">Login to Your Account</string>
+    <string name="reset_password_text">Reset Password</string>
+</resources>
