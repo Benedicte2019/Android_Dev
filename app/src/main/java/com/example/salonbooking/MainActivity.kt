@@ -12,16 +12,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.salonbooking.ui.theme.SalonBookingTheme
@@ -64,6 +68,7 @@ fun MainScreen() {
 
         PickTime()
 
+        SelectService()
 
     }
 
@@ -177,12 +182,9 @@ fun PickTime() {
     val minute = calen[Calendar.MINUTE]
     val hour = calen[Calendar.HOUR_OF_DAY]
 
-//    calen.time = Date()
-
-
     val timeVal = remember { mutableStateOf("") }
 
-
+    // creating timepicker dialog
     val timePickerDialog = TimePickerDialog(
         context,
         { _: TimePicker, hour: Int, minute: Int ->
@@ -215,6 +217,63 @@ fun PickTime() {
     }
 }
 
+@Composable
+fun SelectService() {
+    // list of radio buttons
+    val servicesOptions = listOf("Braiding", "Hair Cut", "Make Up", "Manicure")
+    val (selectedOption, onOptionSelected) = remember {
+        mutableStateOf(servicesOptions[0])
+    }
+
+    Column(
+        Modifier
+            .selectableGroup()
+            .padding(start = 20.dp, top = 270.dp)
+    ) {
+        Text(text = "Select Service:")
+
+        // radio buttons menu group starts here
+        servicesOptions.forEach { text ->
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .height(36.dp)
+                    .selectable(
+                        selected = (text == selectedOption),
+                        onClick = { onOptionSelected(text) },
+                        role = Role.RadioButton
+                    )
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                RadioButton(
+                    selected = (text == selectedOption),
+                    onClick = null // null recommended for accessibility with screenreaders
+                )
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.padding(start = 16.dp)
+                )
+            }
+
+        }
+        
+        Text(text = "Selected Service: ${selectedOption}")
+        Spacer(modifier = Modifier.size(16.dp))
+        
+        //Submit Button
+        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58)),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 20.dp)) {
+            Text(text = "Confirm Appointment", color = Color.White)
+        }
+
+    }
+
+}
 
 
 @RequiresApi(Build.VERSION_CODES.N)
