@@ -4,4 +4,10 @@
     <style name="Theme.SukaFasta" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/purple_700</item>
     </style>
+    <style name="Theme.SukaFasta.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.SukaFasta.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.SukaFasta.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

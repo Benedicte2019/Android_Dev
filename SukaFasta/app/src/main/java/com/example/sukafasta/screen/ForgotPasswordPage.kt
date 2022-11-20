@@ -49,18 +49,12 @@ fun Fields(navController: NavController) {
         contentAlignment = Alignment.BottomCenter
     )
     {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White),
-            contentAlignment = Alignment.TopCenter
-        ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.6f)
+                    .fillMaxHeight(1f)
                     .clip(RoundedCornerShape(30.dp, 30.dp))
                     .background(whiteBackground)
                     .padding(10.dp)
@@ -106,5 +100,4 @@ fun Fields(navController: NavController) {
                 }
             }
         }
-    }
 }
