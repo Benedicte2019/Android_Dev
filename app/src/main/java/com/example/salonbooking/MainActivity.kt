@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -57,8 +58,10 @@ fun MainScreen() {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.bookAppointment))
+                    Text(text = stringResource(id = R.string.bookAppointment),
+                    color = Color.White)
                 },
+                backgroundColor = Color(0XFF0F9D58)
             )
         },
         bottomBar = { BottomBar() }
@@ -147,15 +150,17 @@ fun PickDate() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(20.dp)
+            .padding(start = 20.dp, top = 20.dp)
     ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "Select Date")
 
-        Text(text = "Select Date")
-
-        Button(onClick = {
-            mDatePickerDialog.show()
-        }, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))) {
-            Text(text = "Pick Date", color = Color.White)
+            Button(onClick = {
+                mDatePickerDialog.show()
+            }, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58)),
+                modifier = Modifier.padding(start = 189.dp)) {
+                Text(text = "Pick Date", color = Color.White)
+            }
         }
 
         // Adding a space after button
@@ -195,15 +200,18 @@ fun PickTime() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 20.dp, top = 150.dp)
+            .padding(start = 20.dp, top = 130.dp)
     ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
 
-        Text(text = "Select Time")
+            Text(text = "Select Time")
 
-        Button(onClick = {
-            timePickerDialog.show()
-        }, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58))) {
-            Text(text = "Pick Time", color = Color.White)
+            Button(onClick = {
+                timePickerDialog.show()
+            }, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58)),
+            modifier = Modifier.padding(start = 183.dp)) {
+                Text(text = "Pick Time", color = Color.White)
+            }
         }
 
         // Adding a space after button
@@ -228,7 +236,7 @@ fun SelectService() {
     Column(
         Modifier
             .selectableGroup()
-            .padding(start = 20.dp, top = 270.dp)
+            .padding(start = 20.dp, top = 240.dp)
     ) {
         Text(text = "Select Service:")
 
@@ -260,14 +268,18 @@ fun SelectService() {
 
         }
         
-        Text(text = "Selected Service: ${selectedOption}")
-        Spacer(modifier = Modifier.size(16.dp))
+        Text(text = "Selected Service: ${selectedOption}",
+            modifier = Modifier.padding(top = 15.dp))
+        Spacer(modifier = Modifier.size(60.dp))
         
         //Submit Button
         Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58)),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(end = 20.dp)) {
+                .padding(end = 20.dp)
+                .height(45.dp),
+            shape = RoundedCornerShape(30.dp)
+                ) {
             Text(text = "Confirm Appointment", color = Color.White)
         }
 
