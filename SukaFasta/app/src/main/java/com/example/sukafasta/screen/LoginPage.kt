@@ -10,6 +10,9 @@ import androidx.compose.material.*
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +43,7 @@ import com.example.sukafasta.R
 import com.example.sukafasta.ui.theme.Purple700
 import com.example.sukafasta.ui.theme.primaryColor
 import com.example.sukafasta.ui.theme.whiteBackground
+import com.firebase.ui.auth.AuthUI
 
 @Composable
 fun LoginPage(navController: NavController){
@@ -48,82 +52,70 @@ fun LoginPage(navController: NavController){
     val passwordVisibility = remember { mutableStateOf(false) }
     val focusRequester = remember {FocusRequester() }
 
-    Box(modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .fillMaxHeight(),
+        contentAlignment = Alignment.Center
         )
     {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),
-        contentAlignment = Alignment.TopCenter){
-//            Text(text = stringResource(id = R.string.login_text))
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.6f)
-                    .clip(RoundedCornerShape(30.dp, 30.dp))
-                    .background(whiteBackground)
-                    .padding(10.dp)
-            ) {
-                Text(text = stringResource(id = R.string.login_text),
-                    style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold,
-                        letterSpacing = (2.sp)),
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(1f)
+                .clip(RoundedCornerShape(30.dp, 30.dp))
+                .background(whiteBackground)
+                .padding(10.dp)
+        ) {
+            Text(text = stringResource(id = R.string.login_text),
+                style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold,
+                    letterSpacing = (2.sp)),
+
+            )
+            Spacer(modifier = Modifier.padding(20.dp))
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                OutlinedTextField(value = emailValue.value,
+                    onValueChange = {emailValue.value = it},
+                    label = { Text(text = "Email")},
+                    placeholder = { Text(text = "e.g. example@domain.com")},
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(0.8f)
+                )
+                OutlinedTextField(value = passwordValue.value, onValueChange = {passwordValue.value = it},
+                trailingIcon = {
+                    IconButton(onClick = { passwordVisibility.value = !passwordVisibility.value })
+                    {
+                        androidx.compose.material.Icon(
+                            imageVector = ImageVector.vectorResource(
+                            id = R.drawable.password_eye,
+                        ),
+                            contentDescription = "",
+                            tint = if (passwordVisibility.value) primaryColor else Color.Gray
+                        )
+                    }
+                },
+                label = { Text(text = "Password")},
+                    placeholder = { Text(text = "Password")},
+                    singleLine = true,
+                    visualTransformation = if (passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .focusRequester(focusRequester = focusRequester),
 
                 )
-                Spacer(modifier = Modifier.padding(20.dp))
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    OutlinedTextField(value = emailValue.value,
-                        onValueChange = {emailValue.value = it},
-                        label = { Text(text = "Email")},
-                        placeholder = { Text(text = "e.g. example@domain.com")},
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(0.8f)
-                    )
-                    OutlinedTextField(value = passwordValue.value, onValueChange = {passwordValue.value = it},
-                    trailingIcon = {
-                        IconButton(onClick = { passwordVisibility.value = !passwordVisibility.value })
-                        {
-                            androidx.compose.material.Icon(
-                                imageVector = ImageVector.vectorResource(
-                                id = R.drawable.password_eye,
-                            ),
-                                contentDescription = "",
-                                tint = if (passwordVisibility.value) primaryColor else Color.Gray
-                            )
-                        }
-                    },
-                    label = { Text(text = "Password")},
-                        placeholder = { Text(text = "Password")},
-                        singleLine = true,
-                        visualTransformation = if (passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
-                        modifier = Modifier
-                            .fillMaxWidth(0.8f)
-                            .focusRequester(focusRequester = focusRequester),
-                        
-                    )
-                    
-                    Spacer(modifier = Modifier.padding(10.dp))
-                    Button(onClick = { },
-                        modifier = Modifier
-                            .fillMaxWidth(0.8f)
-                            .height(50.dp)
-                    ) {
-                        Text(text = "Login",
-                            fontSize = TextUnit.Companion.Unspecified
-                            )
-                    }
-                    Spacer(modifier = Modifier.padding(20.dp))
-//                    Text(
-//                        text = "Create An Account",
-//                        modifier = Modifier.clickable(onClick = {
-//                            navController.navigate("Register"){
-//                                popUpToId
-//                                launchSingleTop = true
-//                            }
-//                        })
-//                    )
+
+                Spacer(modifier = Modifier.padding(10.dp))
+                Button(onClick = {  },
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .height(50.dp)
+                ) {
+                    Text(text = "Login",
+                        fontSize = 20.sp
+                        )
+                }
+                Row() {
                     ClickableText(
                         text = AnnotatedString("Create an Account"),
                         modifier = Modifier
@@ -136,17 +128,27 @@ fun LoginPage(navController: NavController){
                             color = Purple700
                         )
                     )
-                    Spacer(modifier = Modifier.padding(20.dp))
                     ClickableText(
                         text = AnnotatedString("Forgot Password?"),
+                        modifier = Modifier
+                            .padding(20.dp),
                         onClick = {navController.navigate(Routes.ForgotPassword.route) },
                         style = TextStyle(
                             fontSize = 14.sp,
-                            fontFamily = FontFamily.Default
+                            fontFamily = FontFamily.Default,
+                            textDecoration = TextDecoration.Underline,
+                            color = Color.Red
                         )
                     )
                 }
             }
         }
     }
+}
+
+fun signIn() {
+    TODO("Not yet implemented")
+    val authProviders = arrayListOf(
+        AuthUI.IdpConfig.EmailBuilder().build()
+    )
 }
