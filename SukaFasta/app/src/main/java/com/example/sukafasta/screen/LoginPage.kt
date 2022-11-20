@@ -106,7 +106,7 @@ fun LoginPage(navController: NavController){
                 )
 
                 Spacer(modifier = Modifier.padding(10.dp))
-                Button(onClick = { signIn() },
+                Button(onClick = {  },
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .height(50.dp)
