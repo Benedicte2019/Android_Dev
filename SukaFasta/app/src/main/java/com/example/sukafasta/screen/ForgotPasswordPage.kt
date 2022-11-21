@@ -1,5 +1,6 @@
 package com.example.sukafasta.screen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,7 +35,7 @@ import com.example.sukafasta.ui.theme.primaryColor
 import com.example.sukafasta.ui.theme.whiteBackground
 
 @Composable
-fun ForgotPasswordPage(navController: NavController) {
+fun ForgotPasswordPage(navController: NavController, context: ComponentActivity) {
     Box(modifier = Modifier.fillMaxSize()) {
         Fields(navController)
     }
@@ -94,7 +95,7 @@ fun Fields(navController: NavController) {
                     ) {
                         Text(
                             text = "Reset Password",
-                            fontSize = TextUnit.Unspecified
+                            fontSize = 20.sp
                         )
                     }
                 }
