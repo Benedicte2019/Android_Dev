@@ -1,5 +1,8 @@
 package com.example.sukafasta.screen
 
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -35,10 +38,15 @@ import androidx.navigation.NavController
 import com.example.sukafasta.ui.theme.Purple700
 import com.example.sukafasta.ui.theme.primaryColor
 import com.example.sukafasta.ui.theme.whiteBackground
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlin.math.exp
 
 @Composable
-fun RegistrationPage(navController: NavController){
+fun RegistrationPage(navController: NavController, context: ComponentActivity){
+
+    val auth = Firebase.auth
     val firstNameValue = remember { mutableStateOf("") }
     val lastNameValue = remember { mutableStateOf("") }
     val emailValue = remember { mutableStateOf("") }
@@ -175,7 +183,33 @@ fun RegistrationPage(navController: NavController){
                     )
 
                     Spacer(modifier = Modifier.padding(10.dp))
-                    Button(onClick = { }, modifier = Modifier
+                    Button(onClick = {
+                               auth.createUserWithEmailAndPassword(
+                                   emailValue.value,
+                                   passwordValue.value
+                               )
+                                   .addOnCompleteListener(context){task ->
+                                       if (task.isSuccessful) {
+                                           Log.d("AUTH", "Success!")
+                                           Toast
+                                               .makeText(
+                                                   context,
+                                                   context.resources.getString(R.string.register_success),
+                                                   Toast.LENGTH_LONG
+                                               ).show()
+                                       }
+                                       else {
+                                           Log.d("AUTH", "Failed!")
+                                           Toast
+                                               .makeText(
+                                                   context,
+                                                   context.resources.getString(R.string.register_failed),
+                                                   Toast.LENGTH_LONG
+                                               ).show()
+                                       }
+                                   }
+                    },
+                        modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .height(50.dp)) {
                         Text(text = "Sign Up", fontSize = (20.sp))
