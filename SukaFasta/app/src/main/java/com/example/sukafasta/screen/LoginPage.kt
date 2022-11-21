@@ -1,6 +1,9 @@
 package com.example.sukafasta.screen
 
+import android.app.Activity.RESULT_OK
 import android.graphics.drawable.Icon
+import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -44,9 +47,13 @@ import com.example.sukafasta.ui.theme.Purple700
 import com.example.sukafasta.ui.theme.primaryColor
 import com.example.sukafasta.ui.theme.whiteBackground
 import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun LoginPage(navController: NavController){
+fun LoginPage(navController: NavController, context: ComponentActivity){
     val emailValue = remember { mutableStateOf("") }
     val passwordValue = remember {mutableStateOf("")}
     val passwordVisibility = remember { mutableStateOf(false) }
@@ -146,9 +153,4 @@ fun LoginPage(navController: NavController){
     }
 }
 
-fun signIn() {
-    TODO("Not yet implemented")
-    val authProviders = arrayListOf(
-        AuthUI.IdpConfig.EmailBuilder().build()
-    )
-}
+

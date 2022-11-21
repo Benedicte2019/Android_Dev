@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "574504764529",
+    "project_id": "sukafasta",
+    "storage_bucket": "sukafasta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574504764529:android:baf70c200babd3774287d0",
+        "android_client_info": {
+          "package_name": "com.example.sukafasta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "574504764529-3dr0hr1mptjf44r48t1pkohhuh5c404k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2ZSVeR1TJRLrd54h1aUISz3bu6N1hdhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "574504764529-3dr0hr1mptjf44r48t1pkohhuh5c404k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
