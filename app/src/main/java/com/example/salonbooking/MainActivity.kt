@@ -11,6 +11,7 @@ import android.widget.TimePicker
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -58,10 +59,16 @@ fun MainScreen() {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.bookAppointment),
-                    color = Color.White)
+                    Text(text = stringResource(id = R.string.bookAppointment))
                 },
-                backgroundColor = Color(0XFF0F9D58)
+                navigationIcon = {
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Filled.ArrowBack, "backIcon")
+                    }
+                },
+                contentColor = Color.White,
+                backgroundColor = Color(0XFF0F9D58),
+
             )
         },
         bottomBar = { BottomBar() }
