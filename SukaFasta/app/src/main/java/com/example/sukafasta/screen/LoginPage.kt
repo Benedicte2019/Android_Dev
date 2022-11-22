@@ -3,6 +3,7 @@ package com.example.sukafasta.screen
 import android.app.Activity.RESULT_OK
 import android.graphics.drawable.Icon
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -53,17 +54,18 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun LoginPage(navController: NavController, context: ComponentActivity){
+fun LoginPage(navController: NavController, context: ComponentActivity) {
     val emailValue = remember { mutableStateOf("") }
-    val passwordValue = remember {mutableStateOf("")}
+    val passwordValue = remember { mutableStateOf("") }
     val passwordVisibility = remember { mutableStateOf(false) }
-    val focusRequester = remember {FocusRequester() }
+    val focusRequester = remember { FocusRequester() }
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .fillMaxHeight(),
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .fillMaxHeight(),
         contentAlignment = Alignment.Center
-        )
+    )
     {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -75,52 +77,74 @@ fun LoginPage(navController: NavController, context: ComponentActivity){
                 .background(whiteBackground)
                 .padding(10.dp)
         ) {
-            Text(text = stringResource(id = R.string.login_text),
-                style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold,
-                    letterSpacing = (2.sp)),
+            Text(
+                text = stringResource(id = R.string.login_text),
+                style = TextStyle(
+                    fontSize = 20.sp, fontWeight = FontWeight.Bold,
+                    letterSpacing = (2.sp)
+                ),
 
-            )
+                )
             Spacer(modifier = Modifier.padding(20.dp))
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                OutlinedTextField(value = emailValue.value,
-                    onValueChange = {emailValue.value = it},
-                    label = { Text(text = "Email")},
-                    placeholder = { Text(text = "e.g. example@domain.com")},
+                OutlinedTextField(
+                    value = emailValue.value,
+                    onValueChange = { emailValue.value = it },
+                    label = { Text(text = "Email") },
+                    placeholder = { Text(text = "e.g. example@domain.com") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(0.8f)
                 )
-                OutlinedTextField(value = passwordValue.value, onValueChange = {passwordValue.value = it},
-                trailingIcon = {
-                    IconButton(onClick = { passwordVisibility.value = !passwordVisibility.value })
-                    {
-                        androidx.compose.material.Icon(
-                            imageVector = ImageVector.vectorResource(
-                            id = R.drawable.password_eye,
-                        ),
-                            contentDescription = "",
-                            tint = if (passwordVisibility.value) primaryColor else Color.Gray
-                        )
-                    }
-                },
-                label = { Text(text = "Password")},
-                    placeholder = { Text(text = "Password")},
+                Spacer(modifier = Modifier.padding(10.dp))
+                OutlinedTextField(
+                    value = passwordValue.value, onValueChange = { passwordValue.value = it },
+                    trailingIcon = {
+                        IconButton(onClick = {
+                            passwordVisibility.value = !passwordVisibility.value
+                        })
+                        {
+                            androidx.compose.material.Icon(
+                                imageVector = ImageVector.vectorResource(
+                                    id = R.drawable.password_eye,
+                                ),
+                                contentDescription = "",
+                                tint = if (passwordVisibility.value) primaryColor else Color.Gray
+                            )
+                        }
+                    },
+                    label = { Text(text = "Password") },
+                    placeholder = { Text(text = "Password") },
                     singleLine = true,
                     visualTransformation = if (passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .focusRequester(focusRequester = focusRequester),
 
-                )
+                    )
 
                 Spacer(modifier = Modifier.padding(10.dp))
-                Button(onClick = { navController.navigate(Routes.NavBottomBar.route) },
+                Button(
+                    shape = RoundedCornerShape(30.dp),
+                    onClick = {
+                        if (emailValue.value != "" || passwordValue.value != "") {
+                            navController.navigate(Routes.NavBottomBar.route)
+                        } else {
+                            Toast
+                                .makeText(
+                                    context,
+                                    context.resources.getString(R.string.empty_email_password),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .height(50.dp)
                 ) {
-                    Text(text = "Login",
+                    Text(
+                        text = "Login",
                         fontSize = 20.sp
-                        )
+                    )
                 }
                 Row() {
                     ClickableText(
@@ -139,7 +163,7 @@ fun LoginPage(navController: NavController, context: ComponentActivity){
                         text = AnnotatedString("Forgot Password?"),
                         modifier = Modifier
                             .padding(20.dp),
-                        onClick = {navController.navigate(Routes.ForgotPassword.route) },
+                        onClick = { navController.navigate(Routes.ForgotPassword.route) },
                         style = TextStyle(
                             fontSize = 14.sp,
                             fontFamily = FontFamily.Default,

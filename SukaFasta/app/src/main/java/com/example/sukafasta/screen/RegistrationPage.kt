@@ -183,7 +183,9 @@ fun RegistrationPage(navController: NavController, context: ComponentActivity){
                     )
 
                     Spacer(modifier = Modifier.padding(10.dp))
-                    Button(onClick = {
+                    Button(
+                        shape = RoundedCornerShape(30.dp),
+                        onClick = {
                                auth.createUserWithEmailAndPassword(
                                    emailValue.value,
                                    passwordValue.value

@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Theme.SukaFasta" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:statusBarColor">#E8D9C0</item>
     </style>
     <style name="Theme.SukaFasta.NoActionBar">
         <item name="windowActionBar">false</item>

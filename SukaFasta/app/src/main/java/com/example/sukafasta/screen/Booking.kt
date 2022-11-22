@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.sukafasta.ui.theme.primaryColor
 import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -78,7 +79,7 @@ fun PickDate() {
             Button(
                 onClick = {
                     mDatePickerDialog.show()
-                }, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58)),
+                }, colors = ButtonDefaults.buttonColors(backgroundColor = primaryColor),
                 modifier = Modifier.padding(start = 189.dp)
             ) {
                 Text(text = "Pick Date", color = Color.White)
@@ -131,7 +132,7 @@ fun PickTime() {
             Button(
                 onClick = {
                     timePickerDialog.show()
-                }, colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58)),
+                }, colors = ButtonDefaults.buttonColors(backgroundColor = primaryColor),
                 modifier = Modifier.padding(start = 183.dp)
             ) {
                 Text(text = "Pick Time", color = Color.White)
@@ -202,7 +203,7 @@ fun SelectService() {
         //Submit Button
         Button(
             onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0XFF0F9D58)),
+            colors = ButtonDefaults.buttonColors(backgroundColor = primaryColor),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(end = 20.dp)

@@ -88,6 +88,7 @@ fun Fields(navController: NavController) {
 
                     Spacer(modifier = Modifier.padding(10.dp))
                     Button(
+                        shape = RoundedCornerShape(30.dp),
                         onClick = { },
                         modifier = Modifier
                             .fillMaxWidth(0.8f)

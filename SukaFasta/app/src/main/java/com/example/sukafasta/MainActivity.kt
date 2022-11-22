@@ -70,6 +70,10 @@ fun Login(context: ComponentActivity) {
             NavBottomBar()
         }
 
+        composable(Routes.AddService.route){
+            AddService()
+        }
+
 
     }
 }

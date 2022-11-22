@@ -21,6 +21,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.sukafasta.screen.*
 import com.example.sukafasta.R
+import com.example.sukafasta.ui.theme.primaryColor
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
@@ -38,7 +39,7 @@ fun NavBottomBar() {
                     }
                 },
                 contentColor = Color.White,
-                backgroundColor = Color(0xFF18958D),
+                backgroundColor = primaryColor,
 
                 )
         },
@@ -79,6 +80,10 @@ fun NavigationHandler(
         // Account composable
         composable(Routes.Account.route){
             Account()
+        }
+
+        composable(Routes.AddService.route){
+            AddService()
         }
     }
 }
