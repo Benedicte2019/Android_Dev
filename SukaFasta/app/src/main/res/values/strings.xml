@@ -18,4 +18,5 @@
     <string name="homeIcon">Home</string>
     <string name="bookingIcon">My Appointments</string>
     <string name="account">Account</string>
+    <string name="empty_email_password">Enter email and password</string>
 </resources>

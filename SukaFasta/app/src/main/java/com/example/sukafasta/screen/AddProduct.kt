@@ -23,75 +23,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sukafasta.ui.theme.SukaFastaTheme
-
-
-@Composable
-fun MainScreen1() {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Add Product", color = Color.White)
-                },
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
-                    }
-                },
-                contentColor = Color.White,
-                backgroundColor = Color(0XFF0F9D58),
-
-                )
-        },
-        bottomBar = { BottomBar() }
-    ) {
-        addProduct()
-//        addService()
-    }
-
-}
+import com.example.sukafasta.ui.theme.primaryColor
 
 @Composable
-fun BottomBar1() {
-    val selectedItem = remember { mutableStateOf(0) }
-    BottomNavigation(
-        elevation = 10.dp,
-        backgroundColor = Color.White
-    ) {
-
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Home, "")
-        },
-            label = { Text(text = "Home") },
-            selected = (selectedItem.value == 0),
-            onClick = {
-                selectedItem.value = 0
-            })
-
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.DateRange, "")
-        },
-            label = { Text(text = "My Appointment") },
-            selected = (selectedItem.value == 1),
-            onClick = {
-                selectedItem.value = 1
-            })
-
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Person, "")
-        },
-            label = { Text(text = "Account") },
-            selected = (selectedItem.value == 2),
-            onClick = {
-                selectedItem.value = 2
-            })
-    }
-}
-
-
-
-@Composable
-fun addProduct() {
+fun AddProduct() {
     var addProductName = remember {
         mutableStateOf("")
     }
