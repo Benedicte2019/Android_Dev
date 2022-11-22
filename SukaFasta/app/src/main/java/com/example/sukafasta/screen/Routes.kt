@@ -4,4 +4,8 @@ sealed class Routes (val route: String) {
     object Login : Routes("login")
     object Register : Routes("register")
     object ForgotPassword : Routes("forgot_password")
+    object Home : Routes("home")
+    object Booking : Routes("appointment")
+    object Account : Routes("account")
+    object NavBottomBar : Routes("nav_bottom_bar")
 }
