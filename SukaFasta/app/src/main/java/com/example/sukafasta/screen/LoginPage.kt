@@ -113,7 +113,7 @@ fun LoginPage(navController: NavController, context: ComponentActivity){
                 )
 
                 Spacer(modifier = Modifier.padding(10.dp))
-                Button(onClick = { navController.navigate(Routes.Booking.route) },
+                Button(onClick = { navController.navigate(Routes.NavBottomBar.route) },
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .height(50.dp)

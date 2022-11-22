@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -39,61 +38,21 @@ fun NavBottomBar() {
                     }
                 },
                 contentColor = Color.White,
-                backgroundColor = Color(0XFF0F9D58),
+                backgroundColor = Color(0xFF18958D),
 
                 )
         },
         content = { NavigationHandler(navController = navController)},
         bottomBar = { NewBottomBar(navController = navController) }
     )
-//    {
-
-//        PickDate()
-//
-//        PickTime()
-//
-//        SelectService()
-
-//    }
-
 }
 
-@Composable
-fun BottomBar() {
-    val selectedItem = remember { mutableStateOf(0) }
-    BottomNavigation(
-        elevation = 10.dp,
-        backgroundColor = Color.White
-    ) {
 
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Home, "")
-        },
-            label = { Text(text = stringResource(id = R.string.homeIcon)) },
-            selected = (selectedItem.value == 0),
-            onClick = {
-                selectedItem.value = 0
-            })
-
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.DateRange, "")
-        },
-            label = { Text(text = stringResource(id = R.string.bookingIcon)) },
-            selected = (selectedItem.value == 1),
-            onClick = {
-                selectedItem.value = 1
-            })
-
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Person, "")
-        },
-            label = { Text(text = stringResource(id = R.string.account)) },
-            selected = (selectedItem.value == 2),
-            onClick = {
-                selectedItem.value = 2
-            })
-    }
-}
+//@Composable
+//fun TopBar()
+//{
+//
+//}
 
 
 // function to handle navigation
@@ -143,6 +102,7 @@ fun NewBottomBar(navController: NavHostController){
                         launchSingleTop = true
                         restoreState = true
                     }
+
                 },
                 icon = {
                     Icon(imageVector = navItem.image,

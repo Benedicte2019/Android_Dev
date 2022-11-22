@@ -1,5 +1,6 @@
 package com.example.sukafasta
 
+import NavBottomBar
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -63,6 +64,10 @@ fun Login(context: ComponentActivity) {
         // Account composable
         composable(Routes.Account.route){
             Account()
+        }
+
+        composable(Routes.NavBottomBar.route){
+            NavBottomBar()
         }
 
 

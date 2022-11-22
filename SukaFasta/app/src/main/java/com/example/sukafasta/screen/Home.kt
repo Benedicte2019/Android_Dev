@@ -12,6 +12,5 @@ import androidx.compose.runtime.Composable
 fun Home(){
     Column {
         Text(text = "Nothing Here Yet!")
-//        NavBottomBar()
     }
 }
