@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -25,7 +24,7 @@ import com.example.sukafasta.R
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun MainScreen() {
+fun NavBottomBar() {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
@@ -39,61 +38,21 @@ fun MainScreen() {
                     }
                 },
                 contentColor = Color.White,
-                backgroundColor = Color(0XFF0F9D58),
+                backgroundColor = Color(0xFF18958D),
 
                 )
         },
         content = { NavigationHandler(navController = navController)},
         bottomBar = { NewBottomBar(navController = navController) }
     )
-//    {
-
-//        PickDate()
-//
-//        PickTime()
-//
-//        SelectService()
-
-//    }
-
 }
 
-@Composable
-fun BottomBar() {
-    val selectedItem = remember { mutableStateOf(0) }
-    BottomNavigation(
-        elevation = 10.dp,
-        backgroundColor = Color.White
-    ) {
 
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Home, "")
-        },
-            label = { Text(text = stringResource(id = R.string.homeIcon)) },
-            selected = (selectedItem.value == 0),
-            onClick = {
-                selectedItem.value = 0
-            })
-
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.DateRange, "")
-        },
-            label = { Text(text = stringResource(id = R.string.bookingIcon)) },
-            selected = (selectedItem.value == 1),
-            onClick = {
-                selectedItem.value = 1
-            })
-
-        BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Person, "")
-        },
-            label = { Text(text = stringResource(id = R.string.account)) },
-            selected = (selectedItem.value == 2),
-            onClick = {
-                selectedItem.value = 2
-            })
-    }
-}
+//@Composable
+//fun TopBar()
+//{
+//
+//}
 
 
 // function to handle navigation
@@ -105,20 +64,20 @@ fun NavigationHandler(
 ){
     NavHost(
         navController = navController,
-        startDestination = ScreenRoutes.Home.route
+        startDestination = Routes.Home.route
     ){
         // Home composable
-        composable(ScreenRoutes.Home.route){
+        composable(Routes.Home.route){
             Home()
         }
 
         // Appointment composable
-        composable(ScreenRoutes.Booking.route){
+        composable(Routes.Booking.route){
             Booking()
         }
 
         // Account composable
-        composable(ScreenRoutes.Account.route){
+        composable(Routes.Account.route){
             Account()
         }
     }
@@ -143,6 +102,7 @@ fun NewBottomBar(navController: NavHostController){
                         launchSingleTop = true
                         restoreState = true
                     }
+
                 },
                 icon = {
                     Icon(imageVector = navItem.image,
