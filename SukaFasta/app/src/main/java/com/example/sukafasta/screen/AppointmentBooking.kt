@@ -25,7 +25,7 @@ import com.example.sukafasta.R
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun MainScreen() {
+fun NavBottomBar() {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
@@ -105,20 +105,20 @@ fun NavigationHandler(
 ){
     NavHost(
         navController = navController,
-        startDestination = ScreenRoutes.Home.route
+        startDestination = Routes.Home.route
     ){
         // Home composable
-        composable(ScreenRoutes.Home.route){
+        composable(Routes.Home.route){
             Home()
         }
 
         // Appointment composable
-        composable(ScreenRoutes.Booking.route){
+        composable(Routes.Booking.route){
             Booking()
         }
 
         // Account composable
-        composable(ScreenRoutes.Account.route){
+        composable(Routes.Account.route){
             Account()
         }
     }
