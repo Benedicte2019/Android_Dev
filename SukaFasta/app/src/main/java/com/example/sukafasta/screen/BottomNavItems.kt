@@ -21,6 +21,7 @@ object BottomNavItems {
             image = Icons.Filled.AddCircle,
             route = "add_service"
         ),
+        
         BottomBarItem(
             title = "Account",
             image = Icons.Filled.Person,
