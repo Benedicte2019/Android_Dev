@@ -1,10 +1,7 @@
 package com.example.sukafasta.screen
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 
 object BottomNavItems {
 
@@ -21,9 +18,10 @@ object BottomNavItems {
         ),
         BottomBarItem(
             title = "Add Service",
-            image = Icons.Filled.Settings,
+            image = Icons.Filled.AddCircle,
             route = "add_service"
         ),
+        
         BottomBarItem(
             title = "Account",
             image = Icons.Filled.Person,
