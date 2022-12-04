@@ -9,4 +9,5 @@ sealed class Routes (val route: String) {
     object Account : Routes("account")
     object NavBottomBar : Routes("nav_bottom_bar")
     object AddService : Routes("add_service")
+    object Appointments : Routes("appointments")
 }
