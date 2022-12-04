@@ -21,11 +21,17 @@ object BottomNavItems {
             image = Icons.Filled.AddCircle,
             route = "add_service"
         ),
-        
+
+//        BottomBarItem(
+//            title = "Account",
+//            image = Icons.Filled.Person,
+//            route = "account"
+//        ),
+
         BottomBarItem(
-            title = "Account",
-            image = Icons.Filled.Person,
-            route = "account"
+            title = "Appointments",
+            image = Icons.Filled.List,
+            route = "appointments"
         ),
 
     )

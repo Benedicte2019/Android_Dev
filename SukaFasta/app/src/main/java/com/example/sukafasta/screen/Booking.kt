@@ -2,19 +2,19 @@ package com.example.sukafasta.screen
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.icu.util.Calendar
 import android.os.Build
 import android.widget.DatePicker
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,23 +22,38 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.sukafasta.model.Appointment
 import com.example.sukafasta.ui.theme.primaryColor
 import java.util.*
+import com.example.sukafasta.R
+import com.example.sukafasta.model.AppointmentViewModel
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun Booking(){
-    PickDate()
+fun Booking(viewModel: AppointmentViewModel){
+    val context = LocalContext.current
+//    val viewModel: AppointmentViewModel = viewModel();
+    val selectedDate = remember {
+        mutableStateOf("")
+    }
+    val selectedTime = remember {
+        mutableStateOf("")
+    }
+    val selectedService = remember {
+        mutableStateOf("")
+    }
+    PickDate(selectedDate, selectedTime, selectedService)
 
-    PickTime()
+    PickTime(selectedDate, selectedTime, selectedService)
 
-    SelectService()
+    SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.add(it)})
 }
 
 // handles picking date during appointment setting
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun PickDate() {
+fun PickDate(selectedDate: MutableState<String>, selectedTime: MutableState<String>, selectedService: MutableState<String>) {
 
     val context = LocalContext.current
 
@@ -65,7 +80,7 @@ fun PickDate() {
         context,
         { _: DatePicker, year: Int, month: Int, day: Int ->
             dateVal.value = "$day-${month + 1}-$year"
-        }, year, month, day
+        selectedDate.value = dateVal.value}, year, month, day
     )
 
     Column(
@@ -99,7 +114,7 @@ fun PickDate() {
 // handles picking time while setting up appointment
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun PickTime() {
+fun PickTime(selectedDate: MutableState<String>, selectedTime: MutableState<String>, selectedService: MutableState<String>) {
 
     val context = LocalContext.current
 
@@ -117,7 +132,7 @@ fun PickTime() {
         context,
         { _: TimePicker, hour: Int, minute: Int ->
             timeVal.value = "$hour:$minute"
-        }, hour, minute, false
+        selectedTime.value = timeVal.value}, hour, minute, false
     )
 
     Column(
@@ -152,7 +167,7 @@ fun PickTime() {
 
 // displays radio buttons to choose service during appointment booking
 @Composable
-fun SelectService() {
+fun SelectService(context: Context, selectedDate: MutableState<String>, selectedTime: MutableState<String>, selectedService: MutableState<String>, addAppointment: (Appointment) -> Unit) {
     // list of radio buttons
     val servicesOptions = listOf("Braiding", "Hair Cut", "Make Up", "Manicure")
     val (selectedOption, onOptionSelected) = remember {
@@ -183,7 +198,7 @@ fun SelectService() {
 
                 RadioButton(
                     selected = (text == selectedOption),
-                    onClick = null // null recommended for accessibility with screenreaders
+                    onClick = {selectedService.value = selectedOption} // null recommended for accessibility with screenreaders
                 )
                 Text(
                     text = text,
@@ -202,7 +217,15 @@ fun SelectService() {
 
         //Submit Button
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                val newID = UUID.randomUUID().toString();
+                addAppointment(Appointment(newID, selectedService.value, selectedDate.value, selectedTime.value))
+                Toast.makeText(
+                    context,
+                    context.resources.getString(R.string.appointmentAdded),
+                    Toast.LENGTH_SHORT
+                ).show()
+                      },
             colors = ButtonDefaults.buttonColors(backgroundColor = primaryColor),
             modifier = Modifier
                 .fillMaxWidth()
