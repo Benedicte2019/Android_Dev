@@ -127,7 +127,7 @@ fun LoginPage(navController: NavController, context: ComponentActivity) {
                     shape = RoundedCornerShape(30.dp),
                     onClick = {
                         if (emailValue.value != "" || passwordValue.value != "") {
-                            navController.navigate(Routes.NavBottomBar.route)
+                            navController.navigate(Routes.Home.route)
                         } else {
                             Toast
                                 .makeText(
