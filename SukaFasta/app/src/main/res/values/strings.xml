@@ -19,4 +19,14 @@
     <string name="bookingIcon">My Appointments</string>
     <string name="account">Account</string>
     <string name="empty_email_password">Enter email and password</string>
+
+    <string name="delete">Delete Appointment?</string>
+    <string name="deleteAppointment">Todo Deleted</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="completed">Completed!</string>
+
+    <string name="readmsg"></string>
+    <string name="appointmentAdded">Appointment Added</string>
+
 </resources>

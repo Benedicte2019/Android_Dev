@@ -3,16 +3,11 @@ import androidx.annotation.RequiresApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -21,11 +16,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.sukafasta.screen.*
 import com.example.sukafasta.R
+import com.example.sukafasta.model.AppointmentViewModel
 import com.example.sukafasta.ui.theme.primaryColor
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun NavBottomBar() {
+fun NavBottomBar(viewModel: AppointmentViewModel) {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
@@ -43,25 +39,16 @@ fun NavBottomBar() {
 
                 )
         },
-        content = { NavigationHandler(navController = navController)},
+        content = { NavigationHandler(navController = navController, viewModel)},
         bottomBar = { NewBottomBar(navController = navController) }
     )
 }
-
-
-//@Composable
-//fun TopBar()
-//{
-//
-//}
-
 
 // function to handle navigation
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun NavigationHandler(
-    navController: NavHostController,
-//    startDestination: String = "home"
+    navController: NavHostController, viewModel: AppointmentViewModel
 ){
     NavHost(
         navController = navController,
@@ -74,16 +61,20 @@ fun NavigationHandler(
 
         // Appointment composable
         composable(Routes.Booking.route){
-            Booking()
+            Booking(viewModel)
         }
 
-        // Account composable
-        composable(Routes.Account.route){
-            Account()
-        }
+//        // Account composable
+//        composable(Routes.Account.route){
+//            Account()
+//        }
 
         composable(Routes.AddService.route){
             AddService()
+        }
+
+        composable(Routes.Appointments.route){
+            ClientAppointmentsScreen(viewModel)
         }
     }
 }
