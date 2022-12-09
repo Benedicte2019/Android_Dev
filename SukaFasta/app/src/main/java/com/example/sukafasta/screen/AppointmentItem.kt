@@ -82,16 +82,16 @@ fun AppointmentItem(item: Appointment, context: Context, deleteAppointment: (App
 @Composable
 fun changeCardColorWhenCompleted(done: Boolean): Color {
     if (done){
-        return MaterialTheme.colors.secondary;
+        return MaterialTheme.colors.primary;
     }
     else
-        return MaterialTheme.colors.primary;
+        return MaterialTheme.colors.secondary;
 }
 @Composable
 fun changeContentColorWhenCompleted(done: Boolean): Color {
     if (done){
-        return MaterialTheme.colors.onSecondary;
+        return MaterialTheme.colors.onPrimary;
     }
     else
-        return MaterialTheme.colors.onPrimary;
+        return MaterialTheme.colors.onSecondary;
 }

@@ -52,12 +52,12 @@ fun NavigationHandler(
 ){
     NavHost(
         navController = navController,
-        startDestination = Routes.Home.route
+        startDestination = Routes.Booking.route
     ){
         // Home composable
-        composable(Routes.Home.route){
-            Home()
-        }
+//        composable(Routes.Home.route){
+//            Home()
+//        }
 
         // Appointment composable
         composable(Routes.Booking.route){
