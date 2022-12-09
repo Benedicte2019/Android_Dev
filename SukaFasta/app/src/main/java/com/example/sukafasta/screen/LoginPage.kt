@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -137,9 +138,18 @@ fun LoginPage(navController: NavController, context: ComponentActivity) {
                                 ).show()
                         }
                     },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 4.dp,
+                        pressedElevation = 15.dp,
+                        disabledElevation = 0.dp,
+                        hoveredElevation = 15.dp,
+                        focusedElevation = 10.dp
+                    ),
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
                         .height(50.dp)
+                        .border(1.dp, MaterialTheme.colors.secondary, RoundedCornerShape(30.dp))
                 ) {
                     Text(
                         text = "Login",

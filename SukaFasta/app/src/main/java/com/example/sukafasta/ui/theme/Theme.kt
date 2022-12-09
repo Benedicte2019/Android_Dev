@@ -28,14 +28,14 @@ private val LightColorPalette = lightColors(
 )
 
 private val SukaLightColorPalette = lightColors(
-    primary = Purple500,
+    primary = primaryColor,
     primaryVariant = Purple700,
-    secondary = Teal200
+    secondary = secondaryColor
 )
 private val SukaDarkColorPalette = darkColors(
     primary = primaryColor,
     primaryVariant = Purple700,
-    secondary = Teal200
+    secondary = secondaryColor
 )
 
 
@@ -43,9 +43,9 @@ private val SukaDarkColorPalette = darkColors(
 @Composable
 fun SukaFastaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        SukaDarkColorPalette
     } else {
-        LightColorPalette
+        SukaLightColorPalette
     }
 
     MaterialTheme(
