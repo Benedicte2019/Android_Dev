@@ -155,6 +155,13 @@ fun AddProduct() {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    SukaFastaTheme {
+        AddProduct()
+    }
+}
 
 
 
