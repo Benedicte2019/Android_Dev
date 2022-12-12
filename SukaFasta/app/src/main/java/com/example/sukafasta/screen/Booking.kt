@@ -221,7 +221,7 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
         Button(
             onClick = {
                 val newID = UUID.randomUUID().toString();
-                addAppointment(Appointment(newID, selectedService.value, selectedDate.value, selectedTime.value))
+                addAppointment(Appointment(newID, selectedService.value, selectedTime.value, selectedDate.value))
                 Toast.makeText(
                     context,
                     context.resources.getString(R.string.appointmentAdded),
