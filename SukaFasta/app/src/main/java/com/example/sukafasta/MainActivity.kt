@@ -89,6 +89,11 @@ fun Login(context: ComponentActivity) {
             ClientAppointmentsScreen(viewModel.appointmentList, userViewModel.userList, {viewModel.deleteAppointment(it)})
         }
 
+        // Blocking Time composable
+        composable(Routes.BlockTime.route){
+            BlockTime()
+        }
+
 
 
     }

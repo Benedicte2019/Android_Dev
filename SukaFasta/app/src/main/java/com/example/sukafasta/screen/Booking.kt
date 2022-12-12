@@ -34,7 +34,18 @@ import com.example.sukafasta.model.ServiceViewModel
 @Composable
 fun Booking(viewModel: AppointmentViewModel, serviceViewModel: ServiceViewModel, phoneNumber: String? = ""){
     val context = LocalContext.current
-//    val viewModel: AppointmentViewModel = viewModel();
+
+    // variables to allow hairdresser to block time/date
+    val startDate = remember {
+        mutableStateOf("")
+    }
+
+    val endDate = remember {
+        mutableStateOf("")
+    }
+
+    /* block */
+
     val selectedDate = remember {
         mutableStateOf("")
     }
@@ -48,7 +59,14 @@ fun Booking(viewModel: AppointmentViewModel, serviceViewModel: ServiceViewModel,
 
     PickTime(selectedTime, selectedDate, selectedService)
 
+<<<<<<< HEAD
     SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.addAppointment(it)}, serviceViewModel.serviceList, phoneNumber)
+=======
+    SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.addAppointment(it)}, phoneNumber)
+
+//    HandleButtonBlockTime()
+
+>>>>>>> ff5b743932ef70278e5f1424c390755e6354f06c
 }
 
 // handles picking date during appointment setting
@@ -173,6 +191,7 @@ fun PickTime(selectedTime: MutableState<String>, selectedDate: MutableState<Stri
 }
 
 // displays radio buttons to choose service during appointment booking
+@RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun SelectService(context: Context, selectedDate: MutableState<String>, selectedTime: MutableState<String>,
                   selectedService: MutableState<String>, addAppointment: (Appointment) -> Unit, serviceList: List<Service>,
@@ -231,7 +250,7 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
             text = "Selected Service: $selectedOption",
             modifier = Modifier.padding(top = 15.dp)
         )
-        Spacer(modifier = Modifier.size(20.dp))
+        Spacer(modifier = Modifier.size(15.dp))
 
 
         //Submit Button
@@ -259,9 +278,26 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
 
 }
 
-// block time by hairdresser
 @Composable
-fun BlockTime(selectedDate: MutableState<String>, selectedTime: MutableState<String>){
+fun HandleButtonBlockTime(){
+    Spacer(modifier = Modifier.size(15.dp))
 
+    // Block time Button
+    Button(
+        onClick = {
+//                BlockTime(startDate = selectedDate, startTime = selectedTime)
+                  Routes.BlockTime.route
+        },
+        colors = ButtonDefaults.buttonColors(backgroundColor = primaryColor),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp, end = 20.dp, top = 510.dp)
+            .height(45.dp),
+        shape = RoundedCornerShape(30.dp)
+    ) {
+        Text(text = "Block Time", color = Color.White, fontSize = 18.sp)
+    }
 }
+
+
 
