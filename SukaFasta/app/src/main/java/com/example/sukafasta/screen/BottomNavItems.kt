@@ -6,11 +6,11 @@ import androidx.compose.material.icons.filled.*
 object BottomNavItems {
 
     val BottomItems = listOf(
-        BottomBarItem(
-            title = "Home",
-            image = Icons.Filled.Home,
-            route = "home"
-        ),
+//        BottomBarItem(
+//            title = "Home",
+//            image = Icons.Filled.Home,
+//            route = "home"
+//        ),
         BottomBarItem(
             title = "Booking",
             image = Icons.Filled.DateRange,

@@ -48,7 +48,7 @@ fun Login(context: ComponentActivity) {
         }
 
         composable(Routes.Home.route){
-            Home()
+            Home(navController)
         }
 
         // Appointment composable
@@ -72,6 +72,8 @@ fun Login(context: ComponentActivity) {
         composable(Routes.Appointments.route){
             ClientAppointmentsScreen(viewModel)
         }
+
+
 
     }
 }

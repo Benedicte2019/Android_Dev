@@ -4,12 +4,14 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import com.example.sukafasta.R
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -43,6 +45,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlin.math.exp
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RegistrationPage(navController: NavController, context: ComponentActivity){
 
@@ -118,38 +121,34 @@ fun RegistrationPage(navController: NavController, context: ComponentActivity){
                     )
 
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        OutlinedTextField(
-                            value = selectedDropDownItem,
-                            onValueChange = { selectedDropDownItem = it },
-                            label = { Text(text = "Hairdresser or Client") },
-                            singleLine = true,
-                            modifier = Modifier
-                                .fillMaxWidth(0.8f)
-                                .onGloballyPositioned { coordinates ->
-                                    dropDownTextFieldSize = coordinates.size.toSize()
-                                },
-                            trailingIcon = {
-                                Icon(dropDownArrowIcon, contentDescription = "",
-                                    Modifier.clickable {
-                                        expandedIsHairdresserDropDown =
-                                            !expandedIsHairdresserDropDown
-                                    })
-                            }
-                        )
-                    }
-                    DropdownMenu(expanded = expandedIsHairdresserDropDown,
-                                onDismissRequest = { expandedIsHairdresserDropDown = false},
-                                modifier = Modifier
-                                    .width(with(LocalDensity.current){ dropDownTextFieldSize.width.toDp() })
-                        ) {
-                        dropDownList.forEach({ item ->
-                            DropdownMenuItem(onClick = {
-                                selectedDropDownItem = item
-                                expandedIsHairdresserDropDown = false
-                            }) {
-                                    Text(text = item)
-                            }
-                        })
+
+                    ExposedDropdownMenuBox(expanded = expandedIsHairdresserDropDown,
+                        onExpandedChange = {expandedIsHairdresserDropDown = !expandedIsHairdresserDropDown}
+                    ) {
+                        TextField(
+                                    readOnly = true,
+                                    value = selectedDropDownItem,
+                                    onValueChange = { /*selectedDropDownItem = it*/ },
+                                    label = { Text(text = "Hairdresser or Client?") },
+
+                                    trailingIcon = {
+                                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedIsHairdresserDropDown)
+                                    },
+                                    colors = ExposedDropdownMenuDefaults.textFieldColors(backgroundColor = Color.White)
+                                )
+                                ExposedDropdownMenu(expanded = expandedIsHairdresserDropDown,
+                                    onDismissRequest = { expandedIsHairdresserDropDown = false},
+                                   ) {
+                                    dropDownList.forEach { item ->
+                                        DropdownMenuItem(onClick = {
+                                            selectedDropDownItem = item
+                                            expandedIsHairdresserDropDown = false
+                                        }) {
+                                            Text(text = item)
+                                        }
+                                    }
+
+                        }
                     }
 
                     OutlinedTextField(
@@ -199,21 +198,38 @@ fun RegistrationPage(navController: NavController, context: ComponentActivity){
                                                    context.resources.getString(R.string.register_success),
                                                    Toast.LENGTH_LONG
                                                ).show()
+
+                                           navController.navigate(Routes.Login.route){
+                                               popUpToId
+                                               launchSingleTop = true
+                                           }
                                        }
+
                                        else {
                                            Log.d("AUTH", "Failed!")
-                                           Toast
-                                               .makeText(
-                                                   context,
-                                                   context.resources.getString(R.string.register_failed),
-                                                   Toast.LENGTH_LONG
-                                               ).show()
+                                           if (passwordValue.value.length < 6)
+                                               Toast
+                                                   .makeText(
+                                                       context,
+                                                       context.resources.getString(R.string.register_failed_short_password),
+                                                       Toast.LENGTH_LONG
+                                                   ).show()
+                                           else {
+                                               Toast
+                                                   .makeText(
+                                                       context,
+                                                       context.resources.getString(R.string.register_failed),
+                                                       Toast.LENGTH_LONG
+                                                   ).show()
+                                           }
                                        }
                                    }
                     },
+                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
                         modifier = Modifier
-                        .fillMaxWidth(0.8f)
-                        .height(50.dp)) {
+                            .fillMaxWidth(0.8f)
+                            .height(50.dp)
+                    ){
                         Text(text = "Sign Up", fontSize = (20.sp))
                     }
                     Spacer(modifier = Modifier.padding(20.dp))
@@ -234,4 +250,4 @@ fun RegistrationPage(navController: NavController, context: ComponentActivity){
                 }
         }
     }
-}
+}}
