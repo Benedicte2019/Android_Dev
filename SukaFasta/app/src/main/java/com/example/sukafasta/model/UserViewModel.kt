@@ -19,7 +19,7 @@ class UserViewModel: ViewModel() {
         userDB.addUser(user)
     }
 
-    fun deleteRecipe(phoneNumber: String) = viewModelScope.launch(Dispatchers.IO){
+    fun deleteUser(phoneNumber: String) = viewModelScope.launch(Dispatchers.IO){
         userDB.deleteUser(phoneNumber)
     }
 

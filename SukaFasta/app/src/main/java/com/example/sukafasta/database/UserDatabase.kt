@@ -56,4 +56,14 @@ class UserDatabase {
                 Log.e("delete", "Error deleting document", e)
             }
     }
+
+//    suspend fun getUserRole(phoneNumber: String){
+//        usersRef.document(phoneNumber).get()
+//            .addOnSuccessListener {
+//
+//            }
+//            .addOnFailureListener { e ->
+//                Log.e("delete", "Error deleting document", e)
+//            }
+//    }
 }
