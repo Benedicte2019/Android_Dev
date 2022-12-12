@@ -14,7 +14,7 @@ object BottomNavItems {
         BottomBarItem(
             title = "Booking",
             image = Icons.Filled.DateRange,
-            route = "appointment"
+            route = "booking"
         ),
         BottomBarItem(
             title = "Add Service",

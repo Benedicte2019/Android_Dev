@@ -30,7 +30,7 @@ import com.example.sukafasta.model.AppointmentViewModel
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun Booking(viewModel: AppointmentViewModel){
+fun Booking(viewModel: AppointmentViewModel, phoneNumber: String? = ""){
     val context = LocalContext.current
 //    val viewModel: AppointmentViewModel = viewModel();
     val selectedDate = remember {
@@ -46,7 +46,7 @@ fun Booking(viewModel: AppointmentViewModel){
 
     PickTime(selectedTime, selectedDate, selectedService)
 
-    SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.addAppointment(it)})
+    SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.addAppointment(it)}, phoneNumber)
 }
 
 // handles picking date during appointment setting
@@ -172,7 +172,7 @@ fun PickTime(selectedTime: MutableState<String>, selectedDate: MutableState<Stri
 
 // displays radio buttons to choose service during appointment booking
 @Composable
-fun SelectService(context: Context, selectedDate: MutableState<String>, selectedTime: MutableState<String>, selectedService: MutableState<String>, addAppointment: (Appointment) -> Unit) {
+fun SelectService(context: Context, selectedDate: MutableState<String>, selectedTime: MutableState<String>, selectedService: MutableState<String>, addAppointment: (Appointment) -> Unit, phoneNumber: String? = "") {
     // list of radio buttons
     val servicesOptions = listOf("Braiding", "Hair Cut", "Make Up", "Manicure")
     val (selectedOption, onOptionSelected) = remember {
@@ -230,7 +230,7 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
         Button(
             onClick = {
                 val newID = UUID.randomUUID().toString();
-                addAppointment(Appointment(newID, selectedService.value, selectedTime.value, selectedDate.value))
+                addAppointment(Appointment(newID, phoneNumber, selectedService.value, selectedTime.value, selectedDate.value))
                 Toast.makeText(
                     context,
                     context.resources.getString(R.string.appointmentAdded),

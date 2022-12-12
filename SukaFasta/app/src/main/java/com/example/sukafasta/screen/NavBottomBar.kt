@@ -17,11 +17,12 @@ import androidx.navigation.compose.rememberNavController
 import com.example.sukafasta.screen.*
 import com.example.sukafasta.R
 import com.example.sukafasta.model.AppointmentViewModel
+import com.example.sukafasta.model.UserViewModel
 import com.example.sukafasta.ui.theme.primaryColor
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun NavBottomBar(viewModel: AppointmentViewModel, phoneNumber: String? = "") {
+fun NavBottomBar(viewModel: AppointmentViewModel, userViewModel: UserViewModel, phoneNumber: String? = "", startDestination: String?) {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
@@ -39,7 +40,7 @@ fun NavBottomBar(viewModel: AppointmentViewModel, phoneNumber: String? = "") {
 
                 )
         },
-        content = { NavigationHandler(navController = navController, viewModel)},
+        content = { NavigationHandler(navController = navController, viewModel, userViewModel, phoneNumber, startDestination)},
         bottomBar = { NewBottomBar(navController = navController) }
     )
 }
@@ -48,33 +49,35 @@ fun NavBottomBar(viewModel: AppointmentViewModel, phoneNumber: String? = "") {
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun NavigationHandler(
-    navController: NavHostController, viewModel: AppointmentViewModel
+    navController: NavHostController, viewModel: AppointmentViewModel, userViewModel: UserViewModel, phoneNumber: String?, startDestination: String?
 ){
-    NavHost(
-        navController = navController,
-        startDestination = Routes.Booking.route
-    ){
-        // Home composable
+    if (startDestination != null) {
+        NavHost(
+            navController = navController,
+            startDestination = startDestination
+        ){
+            // Home composable
 //        composable(Routes.Home.route){
 //            Home()
 //        }
 
-        // Appointment composable
-        composable(Routes.Booking.route){
-            Booking(viewModel)
-        }
+            // Appointment composable
+            composable(Routes.Booking.route){
+                Booking(viewModel, phoneNumber)
+            }
 
 //        // Account composable
 //        composable(Routes.Account.route){
 //            Account()
 //        }
 
-        composable(Routes.AddService.route){
-            AddService()
-        }
+            composable(Routes.AddService.route){
+                AddService()
+            }
 
-        composable(Routes.Appointments.route){
-            ClientAppointmentsScreen(viewModel.appointmentList, {viewModel.deleteAppointment(it)})
+            composable(Routes.Appointments.route){
+                ClientAppointmentsScreen(viewModel.appointmentList, userViewModel.userList, {viewModel.deleteAppointment(it)}, phoneNumber)
+            }
         }
     }
 }
