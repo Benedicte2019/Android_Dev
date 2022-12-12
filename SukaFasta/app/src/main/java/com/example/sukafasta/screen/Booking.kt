@@ -44,7 +44,7 @@ fun Booking(viewModel: AppointmentViewModel){
     }
     PickDate(selectedDate, selectedTime, selectedService)
 
-    PickTime(selectedDate, selectedTime, selectedService)
+    PickTime(selectedTime, selectedDate, selectedService)
 
     SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.addAppointment(it)})
 }
@@ -113,7 +113,7 @@ fun PickDate(selectedDate: MutableState<String>, selectedTime: MutableState<Stri
 // handles picking time while setting up appointment
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun PickTime(selectedDate: MutableState<String>, selectedTime: MutableState<String>, selectedService: MutableState<String>) {
+fun PickTime(selectedTime: MutableState<String>, selectedDate: MutableState<String>, selectedService: MutableState<String>) {
 
     val context = LocalContext.current
 
@@ -189,7 +189,6 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
                     .selectable(
                         selected = (text == selectedOption),
                         onClick = { onOptionSelected(text) },
-                        role = Role.RadioButton
                     )
                     .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -197,7 +196,9 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
 
                 RadioButton(
                     selected = (text == selectedOption),
-                    onClick = {selectedService.value = selectedOption} // null recommended for accessibility with screenreaders
+//                    onClick = {/**/}
+                    onClick = {onOptionSelected(text)
+                        selectedService.value = text}
                 )
                 Text(
                     text = text,
@@ -209,7 +210,7 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
         }
 
         Text(
-            text = "Selected Service: ${selectedOption}",
+            text = "Selected Service: $selectedOption",
             modifier = Modifier.padding(top = 15.dp)
         )
         Spacer(modifier = Modifier.size(50.dp))
