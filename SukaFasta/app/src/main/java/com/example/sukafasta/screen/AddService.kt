@@ -122,7 +122,7 @@ fun AddService() {
                 modifier = Modifier
                     .width(width = 328.dp)
                     .height(height = 40.dp)
-                    .background(color = Color.White)
+                    .background(color = Color.Green)
                     .padding(top = 12.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
 
             )
@@ -134,7 +134,7 @@ fun AddService() {
                 modifier = Modifier
 //                    .width(width = 228.dp)
                     .fillMaxWidth(1f)
-                    .padding(top = 12.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
+                    .padding(top = 22.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
                     .height(height = 43.dp)
 
             ) {
