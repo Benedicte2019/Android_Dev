@@ -188,7 +188,8 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
                     .height(36.dp)
                     .selectable(
                         selected = (text == selectedOption),
-                        onClick = { onOptionSelected(text) },
+                        onClick = { onOptionSelected(text)
+                                  selectedService.value = text},
                         role = Role.RadioButton
                     )
                     .padding(horizontal = 16.dp),

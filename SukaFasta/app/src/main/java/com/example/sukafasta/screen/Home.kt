@@ -31,7 +31,7 @@ import com.example.sukafasta.ui.theme.whiteBackground
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun Home(navController: NavController){
+fun Home(navController: NavController, phoneNumber: String? = "", onNavigateToBookings: (phoneNumber: String)-> Unit){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -70,7 +70,10 @@ fun Home(navController: NavController){
             Button(
                 shape = RoundedCornerShape(30.dp),
                 onClick = {
-                    navController.navigate(Routes.NavBottomBar.route)
+//                    navController.navigate(Routes.NavBottomBar.route)
+                    if (phoneNumber != null) {
+                        onNavigateToBookings(phoneNumber)
+                    }
                     },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
                 modifier = Modifier
