@@ -15,16 +15,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.sukafasta.screen.*
 import com.example.sukafasta.R
-import com.example.sukafasta.model.AppointmentViewModel
-import com.example.sukafasta.model.ProductViewModel
-import com.example.sukafasta.model.ServiceViewModel
-import com.example.sukafasta.model.UserViewModel
+import com.example.sukafasta.model.*
 import com.example.sukafasta.ui.theme.primaryColor
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun NavBottomBar(viewModel: AppointmentViewModel, userViewModel: UserViewModel, serviceViewModel: ServiceViewModel,
-                 productViewModel: ProductViewModel,phoneNumber: String? = "", startDestination: String?) {
+                 productViewModel: ProductViewModel, phoneNumber: String? = "", startDestination: String?) {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
@@ -43,7 +40,7 @@ fun NavBottomBar(viewModel: AppointmentViewModel, userViewModel: UserViewModel, 
                 )
         },
         content = { NavigationHandler(navController = navController, viewModel, userViewModel, serviceViewModel, productViewModel, phoneNumber, startDestination)},
-        bottomBar = { NewBottomBar(navController = navController) }
+        bottomBar = { NewBottomBar(navController = navController, userViewModel.userList, phoneNumber) }
     )
 }
 
@@ -90,13 +87,35 @@ fun NavigationHandler(
 
 // new BottomBar for testing new implementation
 @Composable
-fun NewBottomBar(navController: NavHostController){
+fun NewBottomBar(navController: NavHostController, userList: List<User>, phoneNumber: String?){
+    val role = "client"
+    val bottomNavElements = mutableListOf<BottomBarItem>()
+    for (user in userList)
+    {
+        if (user.phoneNumber.equals(phoneNumber))
+        {
+            if (user.role.equals("client", true))
+            {
+                for (navItem in BottomNavItems.BottomItems)
+                {
+                    if (navItem.visibleTo.equals("client", true) || navItem.visibleTo.equals("all", true))
+                        bottomNavElements.add(navItem)
+                }
+            }
+            else
+                for (navItem in BottomNavItems.BottomItems)
+                {
+                    if (navItem.visibleTo.equals("hairdresser", true) || navItem.visibleTo.equals("all", true))
+                        bottomNavElements.add(navItem)
+                }
+        }
+    }
     BottomNavigation {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = backStackEntry?.destination?.route
 
         // handling state for each item selected on bottom bar
-        BottomNavItems.BottomItems.forEach { navItem ->
+        bottomNavElements.forEach { navItem ->
             BottomNavigationItem(
                 selected = currentRoute == navItem.route,
                 onClick = {

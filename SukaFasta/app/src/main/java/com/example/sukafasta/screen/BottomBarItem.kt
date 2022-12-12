@@ -6,4 +6,5 @@ data class BottomBarItem(
     val title: String,
     val image: ImageVector,
     val route: String,
+    val visibleTo: String
 )

@@ -48,7 +48,7 @@ fun Booking(viewModel: AppointmentViewModel, serviceViewModel: ServiceViewModel,
 
     PickTime(selectedTime, selectedDate, selectedService)
 
-    SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.addAppointment(it)}, phoneNumber)
+    SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.addAppointment(it)}, serviceViewModel.serviceList, phoneNumber)
 }
 
 // handles picking date during appointment setting
@@ -175,9 +175,14 @@ fun PickTime(selectedTime: MutableState<String>, selectedDate: MutableState<Stri
 // displays radio buttons to choose service during appointment booking
 @Composable
 fun SelectService(context: Context, selectedDate: MutableState<String>, selectedTime: MutableState<String>,
-                  selectedService: MutableState<String>, addAppointment: (Appointment) -> Unit, phoneNumber: String? = "") {
+                  selectedService: MutableState<String>, addAppointment: (Appointment) -> Unit, serviceList: List<Service>,
+                  phoneNumber: String? = "") {
     // list of radio buttons
-    val servicesOptions = listOf("Braiding", "Hair Cut", "Make Up", "Manicure")
+    var servicesOptions = mutableListOf<String>()
+
+    for (service in serviceList)
+        servicesOptions.add(service.name)
+
     val (selectedOption, onOptionSelected) = remember {
         mutableStateOf(servicesOptions[0])
     }
