@@ -22,15 +22,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sukafasta.model.Appointment
+import com.example.sukafasta.model.Service
 import com.example.sukafasta.ui.theme.primaryColor
 import java.util.*
 import com.example.sukafasta.R
+import com.example.sukafasta.model.Appointment
 import com.example.sukafasta.model.AppointmentViewModel
+import com.example.sukafasta.model.ServiceViewModel
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun Booking(viewModel: AppointmentViewModel, phoneNumber: String? = ""){
+fun Booking(viewModel: AppointmentViewModel, serviceViewModel: ServiceViewModel, phoneNumber: String? = ""){
     val context = LocalContext.current
 //    val viewModel: AppointmentViewModel = viewModel();
     val selectedDate = remember {
@@ -172,7 +174,8 @@ fun PickTime(selectedTime: MutableState<String>, selectedDate: MutableState<Stri
 
 // displays radio buttons to choose service during appointment booking
 @Composable
-fun SelectService(context: Context, selectedDate: MutableState<String>, selectedTime: MutableState<String>, selectedService: MutableState<String>, addAppointment: (Appointment) -> Unit, phoneNumber: String? = "") {
+fun SelectService(context: Context, selectedDate: MutableState<String>, selectedTime: MutableState<String>,
+                  selectedService: MutableState<String>, addAppointment: (Appointment) -> Unit, phoneNumber: String? = "") {
     // list of radio buttons
     val servicesOptions = listOf("Braiding", "Hair Cut", "Make Up", "Manicure")
     val (selectedOption, onOptionSelected) = remember {

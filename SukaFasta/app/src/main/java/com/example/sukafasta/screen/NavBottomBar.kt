@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -17,12 +16,15 @@ import androidx.navigation.compose.rememberNavController
 import com.example.sukafasta.screen.*
 import com.example.sukafasta.R
 import com.example.sukafasta.model.AppointmentViewModel
+import com.example.sukafasta.model.ProductViewModel
+import com.example.sukafasta.model.ServiceViewModel
 import com.example.sukafasta.model.UserViewModel
 import com.example.sukafasta.ui.theme.primaryColor
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun NavBottomBar(viewModel: AppointmentViewModel, userViewModel: UserViewModel, phoneNumber: String? = "", startDestination: String?) {
+fun NavBottomBar(viewModel: AppointmentViewModel, userViewModel: UserViewModel, serviceViewModel: ServiceViewModel,
+                 productViewModel: ProductViewModel,phoneNumber: String? = "", startDestination: String?) {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
@@ -40,7 +42,7 @@ fun NavBottomBar(viewModel: AppointmentViewModel, userViewModel: UserViewModel, 
 
                 )
         },
-        content = { NavigationHandler(navController = navController, viewModel, userViewModel, phoneNumber, startDestination)},
+        content = { NavigationHandler(navController = navController, viewModel, userViewModel, serviceViewModel, productViewModel, phoneNumber, startDestination)},
         bottomBar = { NewBottomBar(navController = navController) }
     )
 }
@@ -49,7 +51,7 @@ fun NavBottomBar(viewModel: AppointmentViewModel, userViewModel: UserViewModel, 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun NavigationHandler(
-    navController: NavHostController, viewModel: AppointmentViewModel, userViewModel: UserViewModel, phoneNumber: String?, startDestination: String?
+    navController: NavHostController, viewModel: AppointmentViewModel, userViewModel: UserViewModel, serviceViewModel: ServiceViewModel, productViewModel: ProductViewModel, phoneNumber: String?, startDestination: String?
 ){
     if (startDestination != null) {
         NavHost(
@@ -63,7 +65,7 @@ fun NavigationHandler(
 
             // Appointment composable
             composable(Routes.Booking.route){
-                Booking(viewModel, phoneNumber)
+                Booking(viewModel, serviceViewModel, phoneNumber)
             }
 
 //        // Account composable
@@ -72,7 +74,11 @@ fun NavigationHandler(
 //        }
 
             composable(Routes.AddService.route){
-                AddService()
+                AddService({serviceViewModel.addService(it)})
+            }
+
+            composable(Routes.AddProduct.route){
+                AddProduct(productViewModel.productList, {productViewModel.addProduct(it)}, {productViewModel.deleteProduct(it)}, phoneNumber)
             }
 
             composable(Routes.Appointments.route){

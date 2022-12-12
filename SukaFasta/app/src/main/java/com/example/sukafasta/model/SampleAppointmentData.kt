@@ -1,5 +1,5 @@
 package com.example.sukafasta.model
 
-val SampleAppointmentData = listOf<Appointment>(
+val SampleServiceData = listOf<Service>(
 //    Appointment("1", "Braiding", )
 )

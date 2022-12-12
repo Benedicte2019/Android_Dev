@@ -22,14 +22,14 @@ object BottomNavItems {
             route = "add_service"
         ),
 
-//        BottomBarItem(
-//            title = "Account",
-//            image = Icons.Filled.Person,
-//            route = "account"
-//        ),
+        BottomBarItem(
+            title = "Add Product",
+            image = Icons.Filled.Add,
+            route = "add_product"
+        ),
 
         BottomBarItem(
-            title = "Appointments",
+            title = "Bookings",
             image = Icons.Filled.List,
             route = "appointments"
         ),

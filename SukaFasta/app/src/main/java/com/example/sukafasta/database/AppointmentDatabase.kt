@@ -2,6 +2,7 @@ package com.example.sukafasta.database
 
 import android.util.Log
 import com.example.sukafasta.model.Appointment
+import com.example.sukafasta.model.Service
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.toObject
