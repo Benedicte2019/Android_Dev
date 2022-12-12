@@ -54,13 +54,16 @@ fun Login(context: ComponentActivity) {
         composable(Routes.Home.route+"/{phoneNumber}", arguments = listOf(navArgument("phoneNumber"){type=
             NavType.StringType})){
             backStackEntry ->
-            Home(navController, phoneNumber = backStackEntry.arguments?.getString("phoneNumber"), onNavigateToBookings = {phoneNumber -> navController.navigate(Routes.NavBottomBar.route+"/$phoneNumber") })
+            Home(navController, phoneNumber = backStackEntry.arguments?.getString("phoneNumber"), onNavigateToBookings = {phoneNumber, startDestination -> navController.navigate(Routes.NavBottomBar.route+"/$phoneNumber/$startDestination") })
         }
 
-        composable(Routes.NavBottomBar.route+"/{phoneNumber}", arguments = listOf(navArgument("phoneNumber"){type=
-            NavType.StringType})){
+        composable(Routes.NavBottomBar.route+"/{phoneNumber}/{startDestination}",
+            arguments = listOf(navArgument("phoneNumber"){type=NavType.StringType},
+                                navArgument("startDestination"){type=NavType.StringType}))
+        {
                 backStackEntry ->
-            NavBottomBar(viewModel, phoneNumber = backStackEntry.arguments?.getString("phoneNumber")
+            NavBottomBar(viewModel, userViewModel, phoneNumber = backStackEntry.arguments?.getString("phoneNumber"),
+                startDestination = backStackEntry.arguments?.getString("startDestination")
                 )
         }
 
@@ -79,7 +82,7 @@ fun Login(context: ComponentActivity) {
         }
 
         composable(Routes.Appointments.route){
-            ClientAppointmentsScreen(viewModel.appointmentList, {viewModel.deleteAppointment(it)})
+            ClientAppointmentsScreen(viewModel.appointmentList, userViewModel.userList, {viewModel.deleteAppointment(it)})
         }
 
 
