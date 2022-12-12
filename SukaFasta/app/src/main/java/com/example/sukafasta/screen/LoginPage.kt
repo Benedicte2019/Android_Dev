@@ -38,7 +38,7 @@ import com.example.sukafasta.ui.theme.whiteBackground
 import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
-fun LoginPage(navController: NavController, context: ComponentActivity, userList: List<User>) {
+fun LoginPage(navController: NavController, context: ComponentActivity, userList: List<User>, onNavigateToHome: (phoneNumber: String) -> Unit) {
     val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     val phoneNumberValue = remember { mutableStateOf("") }
     val passwordValue = remember { mutableStateOf("") }
@@ -123,7 +123,8 @@ fun LoginPage(navController: NavController, context: ComponentActivity, userList
                                                 context.resources.getString(R.string.login_successful),
                                                 Toast.LENGTH_LONG
                                             ).show()
-                                        navController.navigate(Routes.Home.route)
+//                                        navController.navigate(Routes.Home.route)
+                                        onNavigateToHome(phoneNumberValue.value)
                                     } else {
                                         Toast
                                             .makeText(

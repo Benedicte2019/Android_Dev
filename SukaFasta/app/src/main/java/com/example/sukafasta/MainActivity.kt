@@ -8,9 +8,11 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.sukafasta.model.AppointmentViewModel
 import com.example.sukafasta.model.UserViewModel
 import com.example.sukafasta.screen.*
@@ -38,7 +40,7 @@ fun Login(context: ComponentActivity) {
     val userViewModel: UserViewModel = viewModel()
     NavHost(navController = navController, startDestination = Routes.Login.route) {
         composable(Routes.Login.route) {
-            LoginPage(navController = navController, context, userViewModel.userList)
+            LoginPage(navController = navController, context, userViewModel.userList, onNavigateToHome = {phoneNumber -> navController.navigate(Routes.Home.route+"/$phoneNumber") })
         }
 
         composable(Routes.Register.route){
@@ -49,8 +51,17 @@ fun Login(context: ComponentActivity) {
             ForgotPasswordPage(navController = navController, context)
         }
 
-        composable(Routes.Home.route){
-            Home(navController)
+        composable(Routes.Home.route+"/{phoneNumber}", arguments = listOf(navArgument("phoneNumber"){type=
+            NavType.StringType})){
+            backStackEntry ->
+            Home(navController, phoneNumber = backStackEntry.arguments?.getString("phoneNumber"), onNavigateToBookings = {phoneNumber -> navController.navigate(Routes.NavBottomBar.route+"/$phoneNumber") })
+        }
+
+        composable(Routes.NavBottomBar.route+"/{phoneNumber}", arguments = listOf(navArgument("phoneNumber"){type=
+            NavType.StringType})){
+                backStackEntry ->
+            NavBottomBar(viewModel, phoneNumber = backStackEntry.arguments?.getString("phoneNumber")
+                )
         }
 
         // Appointment composable
@@ -61,10 +72,6 @@ fun Login(context: ComponentActivity) {
         // Account composable
         composable(Routes.Account.route){
             Account()
-        }
-
-        composable(Routes.NavBottomBar.route){
-            NavBottomBar(viewModel)
         }
 
         composable(Routes.AddService.route){
