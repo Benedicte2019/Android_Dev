@@ -22,7 +22,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.sukafasta.model.Appointment
 import com.example.sukafasta.ui.theme.primaryColor
 import java.util.*
@@ -47,7 +46,7 @@ fun Booking(viewModel: AppointmentViewModel){
 
     PickTime(selectedDate, selectedTime, selectedService)
 
-    SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.add(it)})
+    SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.addAppointment(it)})
 }
 
 // handles picking date during appointment setting

@@ -11,7 +11,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="register_success">Registration successful! Login</string>
+    <string name="register_success">Registration successful!</string>
     <string name="register_failed">Registation failed. Account exists</string>
     <string name="register_failed_short_password">Registation failed. Password needs to be more than 6 characters</string>
     <string name="bookAppointment">Book Appointment</string>
@@ -29,5 +29,8 @@
 
     <string name="readmsg"></string>
     <string name="appointmentAdded">Appointment Added</string>
+
+    <string name="login_successful">Login Successful</string>
+    <string name="login_failed">Incorrect Phone number or Password</string>
 
 </resources>

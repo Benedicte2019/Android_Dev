@@ -1,23 +1,13 @@
 package com.example.sukafasta.screen
 
-import android.app.Activity.RESULT_OK
-import android.graphics.drawable.Icon
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
-import androidx.compose.material.IconButton
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +17,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -38,25 +27,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.*
-import androidx.navigation.compose.ComposeNavigator
 import com.example.sukafasta.R
+import com.example.sukafasta.model.User
 import com.example.sukafasta.ui.theme.Purple700
 import com.example.sukafasta.ui.theme.primaryColor
 import com.example.sukafasta.ui.theme.whiteBackground
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
-fun LoginPage(navController: NavController, context: ComponentActivity) {
-    val emailValue = remember { mutableStateOf("") }
+fun LoginPage(navController: NavController, context: ComponentActivity, userList: List<User>) {
+    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    val phoneNumberValue = remember { mutableStateOf("") }
     val passwordValue = remember { mutableStateOf("") }
     val passwordVisibility = remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -89,10 +73,10 @@ fun LoginPage(navController: NavController, context: ComponentActivity) {
             Spacer(modifier = Modifier.padding(20.dp))
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 OutlinedTextField(
-                    value = emailValue.value,
-                    onValueChange = { emailValue.value = it },
-                    label = { Text(text = "Email") },
-                    placeholder = { Text(text = "e.g. example@domain.com") },
+                    value = phoneNumberValue.value,
+                    onValueChange = { phoneNumberValue.value = it },
+                    label = { Text(text = "Phone Number") },
+                    placeholder = { Text(text = "e.g. 07810000000") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(0.8f)
                 )
@@ -127,8 +111,29 @@ fun LoginPage(navController: NavController, context: ComponentActivity) {
                 Button(
                     shape = RoundedCornerShape(30.dp),
                     onClick = {
-                        if (emailValue.value != "" || passwordValue.value != "") {
-                            navController.navigate(Routes.Home.route)
+                        if (!phoneNumberValue.value.equals("") && !passwordValue.value.equals("")) {
+                            for (user in userList) {
+                                if (user.phoneNumber.equals(phoneNumberValue.value, false)
+                                ) {
+                                    if (user.password.equals(passwordValue.value, false))
+                                    {
+                                        Toast
+                                            .makeText(
+                                                context,
+                                                context.resources.getString(R.string.login_successful),
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        navController.navigate(Routes.Home.route)
+                                    } else {
+                                        Toast
+                                            .makeText(
+                                                context,
+                                                context.resources.getString(R.string.login_failed),
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                    }
+                                }
+                            }
                         } else {
                             Toast
                                 .makeText(

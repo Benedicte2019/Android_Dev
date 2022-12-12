@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.sukafasta.model.AppointmentViewModel
+import com.example.sukafasta.model.UserViewModel
 import com.example.sukafasta.screen.*
 import com.example.sukafasta.ui.theme.SukaFastaTheme
 import com.google.firebase.FirebaseApp
@@ -34,13 +35,14 @@ class MainActivity : ComponentActivity() {
 fun Login(context: ComponentActivity) {
     val navController = rememberNavController()
     val viewModel: AppointmentViewModel = viewModel();
+    val userViewModel: UserViewModel = viewModel()
     NavHost(navController = navController, startDestination = Routes.Login.route) {
         composable(Routes.Login.route) {
-            LoginPage(navController = navController, context)
+            LoginPage(navController = navController, context, userViewModel.userList)
         }
 
         composable(Routes.Register.route){
-            RegistrationPage(navController = navController, context)
+            RegistrationPage(navController = navController, context, {userViewModel.addUser(it)})
         }
 
         composable(Routes.ForgotPassword.route) { navBackStack ->
@@ -70,7 +72,7 @@ fun Login(context: ComponentActivity) {
         }
 
         composable(Routes.Appointments.route){
-            ClientAppointmentsScreen(viewModel)
+            ClientAppointmentsScreen(viewModel.appointmentList, {viewModel.deleteAppointment(it)})
         }
 
 
