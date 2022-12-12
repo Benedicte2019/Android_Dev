@@ -74,7 +74,7 @@ fun NavigationHandler(
         }
 
         composable(Routes.Appointments.route){
-            ClientAppointmentsScreen(viewModel)
+            ClientAppointmentsScreen(viewModel.appointmentList, {viewModel.deleteAppointment(it)})
         }
     }
 }

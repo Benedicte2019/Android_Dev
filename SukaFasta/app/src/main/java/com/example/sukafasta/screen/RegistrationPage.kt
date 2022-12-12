@@ -4,14 +4,11 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import com.example.sukafasta.R
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -22,9 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.textInputServiceFactory
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -35,20 +29,20 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.example.sukafasta.R
+import com.example.sukafasta.model.User
 import com.example.sukafasta.ui.theme.Purple700
 import com.example.sukafasta.ui.theme.primaryColor
 import com.example.sukafasta.ui.theme.whiteBackground
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import kotlin.math.exp
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RegistrationPage(navController: NavController, context: ComponentActivity){
-
+fun RegistrationPage(navController: NavController, context: ComponentActivity, addUser: (User)->Unit){
+    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     val auth = Firebase.auth
     val firstNameValue = remember { mutableStateOf("") }
     val lastNameValue = remember { mutableStateOf("") }
@@ -136,9 +130,10 @@ fun RegistrationPage(navController: NavController, context: ComponentActivity){
                                     },
                                     colors = ExposedDropdownMenuDefaults.textFieldColors(backgroundColor = Color.White)
                                 )
-                                ExposedDropdownMenu(expanded = expandedIsHairdresserDropDown,
-                                    onDismissRequest = { expandedIsHairdresserDropDown = false},
-                                   ) {
+                                ExposedDropdownMenu(
+                                    expanded = expandedIsHairdresserDropDown,
+                                    onDismissRequest = { expandedIsHairdresserDropDown = false },
+                                ) {
                                     dropDownList.forEach { item ->
                                         DropdownMenuItem(onClick = {
                                             selectedDropDownItem = item
@@ -185,46 +180,22 @@ fun RegistrationPage(navController: NavController, context: ComponentActivity){
                     Button(
                         shape = RoundedCornerShape(30.dp),
                         onClick = {
-                               auth.createUserWithEmailAndPassword(
-                                   emailValue.value,
-                                   passwordValue.value
-                               )
-                                   .addOnCompleteListener(context){task ->
-                                       if (task.isSuccessful) {
-                                           Log.d("AUTH", "Success!")
-                                           Toast
-                                               .makeText(
-                                                   context,
-                                                   context.resources.getString(R.string.register_success),
-                                                   Toast.LENGTH_LONG
-                                               ).show()
+                                  var newUser: User = User(firstNameValue.value, emailValue.value, phoneValue.value, selectedDropDownItem, passwordValue.value)
+                            db.collection("users")
+                                .document("" + newUser.phoneNumber).set(newUser)
+                            Log.d("AUTH", "Success!")
+                            Toast
+                                .makeText(
+                                    context,
+                                    context.resources.getString(R.string.register_success),
+                                    Toast.LENGTH_LONG
+                                ).show()
 
-                                           navController.navigate(Routes.Login.route){
-                                               popUpToId
-                                               launchSingleTop = true
-                                           }
-                                       }
-
-                                       else {
-                                           Log.d("AUTH", "Failed!")
-                                           if (passwordValue.value.length < 6)
-                                               Toast
-                                                   .makeText(
-                                                       context,
-                                                       context.resources.getString(R.string.register_failed_short_password),
-                                                       Toast.LENGTH_LONG
-                                                   ).show()
-                                           else {
-                                               Toast
-                                                   .makeText(
-                                                       context,
-                                                       context.resources.getString(R.string.register_failed),
-                                                       Toast.LENGTH_LONG
-                                                   ).show()
-                                           }
-                                       }
-                                   }
-                    },
+                            navController.navigate(Routes.Login.route){
+                                popUpToId
+                                launchSingleTop = true
+                            }
+                        },
                         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary),
                         modifier = Modifier
                             .fillMaxWidth(0.8f)
