@@ -21,7 +21,7 @@ import com.example.sukafasta.ui.theme.primaryColor
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun NavBottomBar(viewModel: AppointmentViewModel) {
+fun NavBottomBar(viewModel: AppointmentViewModel, phoneNumber: String? = "") {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
