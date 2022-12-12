@@ -81,6 +81,8 @@ fun PickDate(selectedDate: MutableState<String>, selectedTime: MutableState<Stri
             dateVal.value = "$day-${month + 1}-$year"
         selectedDate.value = dateVal.value}, year, month, day
     )
+    // restrict user from picking date from the past
+    mDatePickerDialog.datePicker.minDate = calen.timeInMillis
 
     Column(
         modifier = Modifier
@@ -133,6 +135,10 @@ fun PickTime(selectedTime: MutableState<String>, selectedDate: MutableState<Stri
             timeVal.value = "$hour:$minute"
         selectedTime.value = timeVal.value}, hour, minute, false
     )
+
+    // restrict user from picking time from the past
+//    timePickerDialog.timePicker.minDate = calen.timeInMillis
+
 
     Column(
         modifier = Modifier
@@ -188,8 +194,10 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
                     .height(36.dp)
                     .selectable(
                         selected = (text == selectedOption),
-                        onClick = { onOptionSelected(text)
-                                  selectedService.value = text},
+                        onClick = {
+                            onOptionSelected(text)
+                            selectedService.value = text
+                        },
                         role = Role.RadioButton
                     )
                     .padding(horizontal = 16.dp),
@@ -215,7 +223,8 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
             text = "Selected Service: $selectedOption",
             modifier = Modifier.padding(top = 15.dp)
         )
-        Spacer(modifier = Modifier.size(50.dp))
+        Spacer(modifier = Modifier.size(20.dp))
+
 
         //Submit Button
         Button(
@@ -239,6 +248,12 @@ fun SelectService(context: Context, selectedDate: MutableState<String>, selected
         }
 
     }
+
+}
+
+// block time by hairdresser
+@Composable
+fun BlockTime(selectedDate: MutableState<String>, selectedTime: MutableState<String>){
 
 }
 
