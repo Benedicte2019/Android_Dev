@@ -109,23 +109,29 @@ fun AddService() {
 
             Spacer(modifier = Modifier.padding(10.dp))
 
-            Text(
-                text = "Upload cover picture",
-                color = Color.Black,
-                style = TextStyle(fontSize = 14.sp),
-                modifier = Modifier
-                    .width(width = 165.dp)
-                    .padding(10.dp)
-            )
 
-            Box(
-                modifier = Modifier
-                    .width(width = 328.dp)
-                    .height(height = 40.dp)
-                    .background(color = Color.Green)
-                    .padding(top = 12.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
 
-            )
+            Button(
+//                shape = RoundedCornerShape(10.dp),
+                onClick = { /**/ },
+                modifier = Modifier
+//                    .width(width = 228.dp)
+                    .fillMaxWidth(1f)
+                    .padding(top = 22.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
+                    .height(height = 43.dp)
+
+
+            ) {
+                Text(
+                    text = "Upload cover picture",
+//                    color = Color.Black,
+                    textAlign = TextAlign.Center,
+                    style = TextStyle(fontSize = 14.sp),
+//                    modifier = Modifier
+//                        .width(width = 165.dp)
+//                        .padding(10.dp)
+                )
+            }
 
             Spacer(modifier = Modifier.padding(10.dp))
             Button(
