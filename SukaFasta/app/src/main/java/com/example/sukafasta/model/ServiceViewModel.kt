@@ -1,16 +1,36 @@
 package com.example.sukafasta.model
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.sukafasta.database.ServiceDatabase
+import com.example.sukafasta.database.UserDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ServiceViewModel: ViewModel() {
-    var servicesList = mutableStateListOf<Service>()
+//    var servicesList = mutableStateListOf<Service>()
+//
+//    fun addService(newService: Service){
+//        servicesList.add(newService)
+//    }
+//
+//    fun delete(service: Service){
+//        servicesList.remove(service)
+//    }
 
-    fun addService(newService: Service){
-        servicesList.add(newService)
+    private val serviceDB = ServiceDatabase()
+
+    var serviceList = serviceDB.allServices
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) { serviceDB.getAllServices() }
     }
 
-    fun delete(service: Service){
-        servicesList.remove(service)
+    fun addService(service: Service) = viewModelScope.launch(Dispatchers.IO){
+        serviceDB.addService(service)
+    }
+
+    fun deleteService(name: String) = viewModelScope.launch(Dispatchers.IO){
+        serviceDB.deleteService(name)
     }
 }

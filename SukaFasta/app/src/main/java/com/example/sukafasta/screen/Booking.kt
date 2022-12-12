@@ -22,15 +22,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sukafasta.model.Appointment
+import com.example.sukafasta.model.Service
 import com.example.sukafasta.ui.theme.primaryColor
 import java.util.*
 import com.example.sukafasta.R
+import com.example.sukafasta.model.Appointment
 import com.example.sukafasta.model.AppointmentViewModel
+import com.example.sukafasta.model.ServiceViewModel
 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun Booking(viewModel: AppointmentViewModel, phoneNumber: String? = ""){
+fun Booking(viewModel: AppointmentViewModel, serviceViewModel: ServiceViewModel, phoneNumber: String? = ""){
     val context = LocalContext.current
 
     // variables to allow hairdresser to block time/date
@@ -57,10 +59,14 @@ fun Booking(viewModel: AppointmentViewModel, phoneNumber: String? = ""){
 
     PickTime(selectedTime, selectedDate, selectedService)
 
+<<<<<<< HEAD
+    SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.addAppointment(it)}, serviceViewModel.serviceList, phoneNumber)
+=======
     SelectService(context, selectedDate, selectedTime, selectedService, {viewModel.addAppointment(it)}, phoneNumber)
 
 //    HandleButtonBlockTime()
 
+>>>>>>> ff5b743932ef70278e5f1424c390755e6354f06c
 }
 
 // handles picking date during appointment setting
@@ -187,9 +193,15 @@ fun PickTime(selectedTime: MutableState<String>, selectedDate: MutableState<Stri
 // displays radio buttons to choose service during appointment booking
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun SelectService(context: Context, selectedDate: MutableState<String>, selectedTime: MutableState<String>, selectedService: MutableState<String>, addAppointment: (Appointment) -> Unit, phoneNumber: String? = "") {
+fun SelectService(context: Context, selectedDate: MutableState<String>, selectedTime: MutableState<String>,
+                  selectedService: MutableState<String>, addAppointment: (Appointment) -> Unit, serviceList: List<Service>,
+                  phoneNumber: String? = "") {
     // list of radio buttons
-    val servicesOptions = listOf("Braiding", "Hair Cut", "Make Up", "Manicure")
+    var servicesOptions = mutableListOf<String>()
+
+    for (service in serviceList)
+        servicesOptions.add(service.name)
+
     val (selectedOption, onOptionSelected) = remember {
         mutableStateOf(servicesOptions[0])
     }

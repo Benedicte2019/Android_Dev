@@ -1,12 +1,10 @@
 package com.example.sukafasta.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
@@ -14,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -24,10 +23,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.sukafasta.R
+import com.example.sukafasta.model.Service
 import com.example.sukafasta.ui.theme.SukaFastaTheme
 
 @Composable
-fun AddService() {
+fun AddService(addService: (Service) -> Unit) {
+    val context = LocalContext.current
     var addServiceName = remember {
         mutableStateOf("")
     }
@@ -136,9 +138,19 @@ fun AddService() {
             Spacer(modifier = Modifier.padding(10.dp))
             Button(
                 shape = RoundedCornerShape(30.dp),
-                onClick = { /**/ },
+                onClick = {
+                          if (!addServiceDesc.value.equals("") && !addServiceName.value.equals(""))
+                          {
+                              addService(Service(addServiceName.value, addServiceDesc.value, null))
+                              Toast
+                                  .makeText(
+                                      context,
+                                      addServiceName.value + " " + context.resources.getString(R.string.service_added),
+                                      Toast.LENGTH_LONG
+                                  ).show()
+                          }
+                },
                 modifier = Modifier
-//                    .width(width = 228.dp)
                     .fillMaxWidth(1f)
                     .padding(top = 22.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
                     .height(height = 43.dp)

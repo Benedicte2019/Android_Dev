@@ -6,16 +6,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.sukafasta.model.Appointment
-import com.example.sukafasta.model.AppointmentViewModel
 import com.example.sukafasta.model.User
 
 @Composable
-fun ClientAppointmentsScreen(appointmentList: List<Appointment>, userList: List<User>, deleteAppointment: (Appointment) -> Unit, phoneNumber: String? = "", )
+fun ClientAppointmentsScreen(appointmentList: List<Appointment>, userList: List<User>, deleteAppointment: (Appointment) -> Unit, phoneNumber: String? = "" )
 {
 //    val viewModel: AppointmentViewModel = viewModel();
     var showDialog by remember { mutableStateOf(false) }
@@ -49,9 +47,9 @@ fun ClientAppointmentsScreen(appointmentList: List<Appointment>, userList: List<
                 }
 
 
-                items(clientAppointmentList, key = {appointment -> appointment.id }) { appointment ->
+                items(clientAppointmentList, key = { appointment -> appointment.id }) { appointment ->
 
-                    AppointmentItem(item = appointment, context, {deleteAppointment(it)})
+                    AppointmentItem(item = appointment, context) { deleteAppointment(it) }
                 }
             }
 
