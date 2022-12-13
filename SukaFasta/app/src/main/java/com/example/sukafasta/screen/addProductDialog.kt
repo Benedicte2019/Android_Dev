@@ -47,7 +47,7 @@ fun addProductDialog(context: Context, dismissDialog:() -> Unit, addProduct:(Pro
             Button(onClick = {
                 if(ProductTextField.isNotEmpty()) {
 //                    val newID = UUID.randomUUID().toString();
-                    addProduct(Product(ProductTextField, productDescriptionTextField, priceTextField, serviceTextField, null))
+                    addProduct(Product(ProductTextField, productDescriptionTextField, serviceTextField,priceTextField, null))
                     Toast.makeText(
                         context,
                         context.resources.getString(R.string.product_added),
