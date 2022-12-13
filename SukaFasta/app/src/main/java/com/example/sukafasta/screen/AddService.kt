@@ -41,7 +41,6 @@ fun AddService(addService: (Service) -> Unit) {
             .padding(20.dp)
             .fillMaxWidth()
             .fillMaxHeight(1f)
-            .background(color = Color.White)
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceEvenly,

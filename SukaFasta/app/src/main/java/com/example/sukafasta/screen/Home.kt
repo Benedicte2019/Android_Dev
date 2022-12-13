@@ -56,12 +56,12 @@ fun Home(navController: NavController, phoneNumber: String? = "", onNavigateToBo
                 )
 
                 Column(modifier = Modifier.padding(10.dp)) {
-                    Text(text = "Hairdressing like never before.",
+                    Text(text = stringResource(id = R.string.home_short_text),
                         style = TextStyle(
                             fontSize = 20.sp, fontWeight = FontWeight.Normal, fontFamily = FontFamily.Cursive,
                             letterSpacing = (2.sp)
                         ))
-                    Text(text = "Book a slot from the comfort of your home and spend less time waiting for a service.")
+                    Text(text = stringResource(id = R.string.home_long_text))
                 }
             }
 
@@ -70,7 +70,7 @@ fun Home(navController: NavController, phoneNumber: String? = "", onNavigateToBo
             Button(
                 shape = RoundedCornerShape(30.dp),
                 onClick = {
-//                    navController.navigate(Routes.NavBottomBar.route)
+//                    navController.navigate(Routes.Booking.route)
                     if (phoneNumber != null) {
                         onNavigateToBookings(phoneNumber, Routes.Booking.route)
                     }
@@ -82,7 +82,7 @@ fun Home(navController: NavController, phoneNumber: String? = "", onNavigateToBo
                     .background(Color.White)
             ) {
                 Text(
-                    text = "Book a Service",
+                    text = stringResource(id = R.string.book_service),
                     fontSize = 20.sp
                 )
             }
@@ -104,7 +104,7 @@ fun Home(navController: NavController, phoneNumber: String? = "", onNavigateToBo
                     .background(Color.White)
             ) {
                 Text(
-                    text = "View my Appointments",
+                    text = stringResource(id = R.string.view_appointments),
                     fontSize = 20.sp
                 )
             }

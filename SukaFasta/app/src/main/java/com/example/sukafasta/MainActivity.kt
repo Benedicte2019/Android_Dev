@@ -13,10 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.sukafasta.model.AppointmentViewModel
-import com.example.sukafasta.model.ProductViewModel
-import com.example.sukafasta.model.ServiceViewModel
-import com.example.sukafasta.model.UserViewModel
+import com.example.sukafasta.model.*
 import com.example.sukafasta.screen.*
 import com.example.sukafasta.ui.theme.SukaFastaTheme
 import com.google.firebase.FirebaseApp
@@ -42,6 +39,7 @@ fun Login(context: ComponentActivity) {
     val userViewModel: UserViewModel = viewModel()
     val serviceViewModel: ServiceViewModel = viewModel()
     val productViewModel: ProductViewModel = viewModel()
+    val timeBlockedViewModel: TimeViewModel = viewModel()
     NavHost(navController = navController, startDestination = Routes.Login.route) {
         composable(Routes.Login.route) {
             LoginPage(navController = navController, context, userViewModel.userList, onNavigateToHome = {phoneNumber -> navController.navigate(Routes.Home.route+"/$phoneNumber") })
@@ -66,14 +64,14 @@ fun Login(context: ComponentActivity) {
                                 navArgument("startDestination"){type=NavType.StringType}))
         {
                 backStackEntry ->
-            NavBottomBar(viewModel, userViewModel, serviceViewModel, productViewModel, phoneNumber = backStackEntry.arguments?.getString("phoneNumber"),
+            NavBottomBar(viewModel, userViewModel, serviceViewModel, productViewModel, timeBlockedViewModel, phoneNumber = backStackEntry.arguments?.getString("phoneNumber"),
                 startDestination = backStackEntry.arguments?.getString("startDestination")
                 )
         }
 
         // Appointment composable
         composable(Routes.Booking.route){
-            Booking(viewModel, serviceViewModel)
+            Booking(viewModel, serviceViewModel, timeBlockedViewModel)
         }
 
         // Account composable
@@ -89,10 +87,10 @@ fun Login(context: ComponentActivity) {
             ClientAppointmentsScreen(viewModel.appointmentList, userViewModel.userList, {viewModel.deleteAppointment(it)})
         }
 
-        // Blocking Time composable
-        composable(Routes.BlockTime.route){
-            BlockTime()
-        }
+//        // Blocking Time composable
+//        composable(Routes.BlockTime.route){
+//            BlockTime { blockedtimeViewModel.addBlockedDate(it) }
+//        }
 
 
 
