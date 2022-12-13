@@ -1,8 +1,6 @@
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -21,25 +19,25 @@ import com.example.sukafasta.ui.theme.primaryColor
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun NavBottomBar(viewModel: AppointmentViewModel, userViewModel: UserViewModel, serviceViewModel: ServiceViewModel,
-                 productViewModel: ProductViewModel, phoneNumber: String? = "", startDestination: String?) {
+                 productViewModel: ProductViewModel, timeViewModel: TimeViewModel, phoneNumber: String? = "", startDestination: String?) {
     val navController = rememberNavController()
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(id = R.string.bookAppointment))
+                    Text(text = stringResource(id = R.string.app_name))
                 },
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Filled.ArrowBack, "backIcon")
-                    }
-                },
+//                navigationIcon = {
+//                    IconButton(onClick = {}) {
+//                        Icon(Icons.Filled.ArrowBack, "backIcon")
+//                    }
+//                },
                 contentColor = Color.White,
                 backgroundColor = primaryColor,
 
                 )
         },
-        content = { NavigationHandler(navController = navController, viewModel, userViewModel, serviceViewModel, productViewModel, phoneNumber, startDestination)},
+        content = { NavigationHandler(navController = navController, viewModel, userViewModel, serviceViewModel, productViewModel, timeViewModel, phoneNumber, startDestination)},
         bottomBar = { NewBottomBar(navController = navController, userViewModel.userList, phoneNumber) }
     )
 }
@@ -48,7 +46,14 @@ fun NavBottomBar(viewModel: AppointmentViewModel, userViewModel: UserViewModel, 
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun NavigationHandler(
-    navController: NavHostController, viewModel: AppointmentViewModel, userViewModel: UserViewModel, serviceViewModel: ServiceViewModel, productViewModel: ProductViewModel, phoneNumber: String?, startDestination: String?
+    navController: NavHostController,
+    viewModel: AppointmentViewModel,
+    userViewModel: UserViewModel,
+    serviceViewModel: ServiceViewModel,
+    productViewModel: ProductViewModel,
+    blockedtimeViewModel: TimeViewModel,
+    phoneNumber: String?,
+    startDestination: String?
 ){
     if (startDestination != null) {
         NavHost(
@@ -62,13 +67,12 @@ fun NavigationHandler(
 
             // Appointment composable
             composable(Routes.Booking.route){
-                Booking(viewModel, serviceViewModel, phoneNumber)
+                Booking(viewModel, serviceViewModel, blockedtimeViewModel, phoneNumber)
             }
 
-//        // Account composable
-//        composable(Routes.Account.route){
-//            Account()
-//        }
+            composable(Routes.BlockTime.route){
+                BlockTime { blockedtimeViewModel.addBlockedDate(it) }
+            }
 
             composable(Routes.AddService.route){
                 AddService({serviceViewModel.addService(it)})
@@ -76,6 +80,15 @@ fun NavigationHandler(
 
             composable(Routes.AddProduct.route){
                 AddProduct(productViewModel.productList, {productViewModel.addProduct(it)}, {productViewModel.deleteProduct(it)}, phoneNumber)
+            }
+
+            composable(Routes.ViewService.route){
+                ViewServiceScreen(serviceViewModel.serviceList, userViewModel.userList, {serviceViewModel.deleteService(it)}, {serviceName: String -> navController.navigate(Routes.ServiceDetail.route+"/$serviceName")}, phoneNumber)
+            }
+
+            composable(Routes.ServiceDetail.route + "/{serviceName}"){
+                backStackEntry ->
+                ServiceDetail(productViewModel.productList, {productViewModel.deleteProduct(it)}, phoneNumber, backStackEntry.arguments?.getString("serviceName"))
             }
 
             composable(Routes.Appointments.route){

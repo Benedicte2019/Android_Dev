@@ -44,5 +44,11 @@
     <string name="product_added">Product Added</string>
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
+    <string name="home_long_text">Book a slot from the comfort of your home and spend less time waiting for a service.</string>
+    <string name="home_short_text">Hairdressing like never before.</string>
+    <string name="view_appointments">View my Appointments</string>
+    <string name="book_service">Book a Service</string>
+    <string name="time_blocked">Time blocked</string>
+    <string name="date_blocked">Date blocked</string>
 
 </resources>

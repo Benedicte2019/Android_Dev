@@ -10,7 +10,7 @@ object BottomNavItems {
             title = "Booking",
             image = Icons.Filled.DateRange,
             route = "booking",
-            visibleTo = "client"
+            visibleTo = "all"
         ),
         BottomBarItem(
             title = "Service",
@@ -27,7 +27,21 @@ object BottomNavItems {
         ),
 
         BottomBarItem(
-            title = "Appointments",
+            title = "Block",
+            image = Icons.Filled.Close,
+            route = "time_blocking",
+            visibleTo = "hairdresser"
+        ),
+
+        BottomBarItem(
+            title = "Services",
+            image = Icons.Filled.List,
+            route = "view_service",
+            visibleTo = "client"
+        ),
+
+        BottomBarItem(
+            title = "List",
             image = Icons.Filled.List,
             route = "appointments",
             visibleTo = "all"

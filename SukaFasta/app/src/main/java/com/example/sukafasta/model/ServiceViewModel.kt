@@ -30,7 +30,7 @@ class ServiceViewModel: ViewModel() {
         serviceDB.addService(service)
     }
 
-    fun deleteService(name: String) = viewModelScope.launch(Dispatchers.IO){
-        serviceDB.deleteService(name)
+    fun deleteService(service: Service) = viewModelScope.launch(Dispatchers.IO){
+        serviceDB.deleteService(service.name)
     }
 }

@@ -125,7 +125,7 @@ fun LoginPage(navController: NavController, context: ComponentActivity, userList
                                             ).show()
 //                                        navController.navigate(Routes.Home.route)
                                         onNavigateToHome(phoneNumberValue.value)
-                                    } else {
+                                    }  else {
                                         Toast
                                             .makeText(
                                                 context,
