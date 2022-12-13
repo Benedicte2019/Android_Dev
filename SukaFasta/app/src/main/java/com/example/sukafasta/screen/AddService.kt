@@ -1,15 +1,16 @@
 package com.example.sukafasta.screen
 
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -35,6 +36,24 @@ fun AddService(addService: (Service) -> Unit) {
     }
     var addServiceDesc = remember {
         mutableStateOf("")
+    }
+    var addPrice = remember {
+        mutableStateOf("")
+    }
+    var imageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+    val launcher = rememberLauncherForActivityResult(
+        contract =
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        imageUri = uri
+        Toast
+            .makeText(
+                context,
+                addServiceName.value + " " + context.resources.getString(R.string.image_uploaded),
+                Toast.LENGTH_LONG
+            ).show()
     }
     Box(
         modifier = Modifier
@@ -109,12 +128,24 @@ fun AddService(addService: (Service) -> Unit) {
             )
 
             Spacer(modifier = Modifier.padding(10.dp))
+            OutlinedTextField(
+                value = addPrice.value,
+                onValueChange = { addPrice.value = it },
+                label = { Text(text = "Add Price") },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .padding(top = 12.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
+
+            )
+
+            Spacer(modifier = Modifier.padding(10.dp))
 
 
 
             Button(
 //                shape = RoundedCornerShape(10.dp),
-                onClick = { /**/ },
+                onClick = { launcher.launch("image/*") },
                 modifier = Modifier
 //                    .width(width = 228.dp)
                     .fillMaxWidth(1f)
@@ -140,7 +171,7 @@ fun AddService(addService: (Service) -> Unit) {
                 onClick = {
                           if (!addServiceDesc.value.equals("") && !addServiceName.value.equals(""))
                           {
-                              addService(Service(addServiceName.value, addServiceDesc.value, null))
+                              addService(Service(addServiceName.value, addServiceDesc.value, addPrice.value, null))
                               Toast
                                   .makeText(
                                       context,

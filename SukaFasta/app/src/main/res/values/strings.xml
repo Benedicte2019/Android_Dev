@@ -50,5 +50,7 @@
     <string name="book_service">Book a Service</string>
     <string name="time_blocked">Time blocked</string>
     <string name="date_blocked">Date blocked</string>
+    <string name="image_uploaded">Image Uploaded</string>
+    <string name="product_price">Product Price</string>
 
 </resources>
