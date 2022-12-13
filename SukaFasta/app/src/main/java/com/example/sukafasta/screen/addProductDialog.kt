@@ -22,6 +22,9 @@ fun addProductDialog(context: Context, dismissDialog:() -> Unit, addProduct:(Pro
     var productDescriptionTextField by remember {
         mutableStateOf("")
     }
+    var priceTextField by remember {
+        mutableStateOf("")
+    }
     var serviceTextField by remember {
         mutableStateOf("")
     }
@@ -35,6 +38,8 @@ fun addProductDialog(context: Context, dismissDialog:() -> Unit, addProduct:(Pro
                 Spacer(modifier = Modifier.height(10.dp))
                 TextField(label = {Text(text=stringResource(id = R.string.product_description))},value = productDescriptionTextField, onValueChange = {productDescriptionTextField=it})
                 Spacer(modifier = Modifier.height(10.dp))
+                TextField(label = {Text(text=stringResource(id = R.string.product_price))},value = priceTextField, onValueChange = {priceTextField=it})
+                Spacer(modifier = Modifier.height(10.dp))
                 TextField(label = {Text(text=stringResource(id = R.string.service_name))},value = serviceTextField, onValueChange = {serviceTextField=it})
             }
         },
@@ -42,7 +47,7 @@ fun addProductDialog(context: Context, dismissDialog:() -> Unit, addProduct:(Pro
             Button(onClick = {
                 if(ProductTextField.isNotEmpty()) {
 //                    val newID = UUID.randomUUID().toString();
-                    addProduct(Product(name = ProductTextField, productDescriptionTextField, serviceTextField, null))
+                    addProduct(Product(ProductTextField, productDescriptionTextField, priceTextField, serviceTextField, null))
                     Toast.makeText(
                         context,
                         context.resources.getString(R.string.product_added),

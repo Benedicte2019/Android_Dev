@@ -59,6 +59,7 @@ fun ProductItem(item: Product, context: Context, deleteProduct: (Product) -> Uni
                 Column() {
                     Text(text = item.name, style = MaterialTheme.typography.h6)
                     Text(text = item.description, style = MaterialTheme.typography.body1)
+                    Text(text = item.price, style = MaterialTheme.typography.body1)
                     Text(text = item.service, style = MaterialTheme.typography.body1)
 
 

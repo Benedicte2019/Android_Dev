@@ -61,6 +61,7 @@ fun ServiceItem(item: Service, context: Context, deleteService: (Service) -> Uni
                 Column() {
                     Text(text = item.name, style = MaterialTheme.typography.h6)
                     Text(text = item.description, style = MaterialTheme.typography.body1)
+                    Text(text = item.price, style = MaterialTheme.typography.body1)
 //                    Text(text = item.time, style = MaterialTheme.typography.body1)
 
 
